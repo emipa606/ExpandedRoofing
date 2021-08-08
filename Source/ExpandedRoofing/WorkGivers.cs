@@ -18,7 +18,7 @@ namespace ExpandedRoofing
                 return false;
             if (!pawn.CanReserve((LocalTargetInfo)c, 1, -1, ReservationLayerDefOf.Ceiling, false))
                 return false;
-            if (!pawn.CanReach(c, PathEndMode.Touch, pawn.NormalMaxDanger(), false, TraverseMode.ByPawn))
+            if (!pawn.CanReach(c, PathEndMode.Touch, pawn.NormalMaxDanger(), false, false, TraverseMode.ByPawn))
                 return false;
             if (!pawn.Map.roofGrid.RoofAt(c).IsBuildableThickRoof())
                 return false;

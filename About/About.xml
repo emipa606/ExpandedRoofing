@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
   <name>Expanded Roofing</name>
-  <author>Why_is_that</author>
+  <author>KiameV (supporting) &amp; Why_is_that (original)</author>
   <supportedVersions>
-		<li>1.1</li>
+		<li>1.3</li>
 	</supportedVersions>
     <modDependencies>
 		<li>

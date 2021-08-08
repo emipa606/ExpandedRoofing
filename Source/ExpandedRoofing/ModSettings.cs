@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Verse;
 using UnityEngine;
-using SettingsHelper;
 using System.Collections.Generic;
 using System;
 
@@ -33,6 +32,7 @@ namespace ExpandedRoofing
         // Used to detect 
         private const string dontTemptMe_ModName = "Don't Tempt Me!";
         private const string glassLights_ModName = "Glass+Lights";
+        private string maxOutputBuffer = "", wattagePerSolarPanel = "";
 
         private bool dontTemptMe = false;
         private static bool glassLights = false;
@@ -63,12 +63,18 @@ namespace ExpandedRoofing
             // NOTE: this disables the mod settings when "Don't Tempt Me!" is installed.
             if (!this.dontTemptMe)
             {
+                if (maxOutputBuffer == "")
+                {
+                    maxOutputBuffer = settings.solarController_maxOutput.ToString("0.00");
+                    wattagePerSolarPanel = settings.solarController_wattagePerSolarPanel.ToString("0.00");
+                }
+
                 Listing_Standard listing_Standard = new Listing_Standard();
                 listing_Standard.Begin(inRect);
-                listing_Standard.AddLabeledNumericalTextField<float>("ER_MaxOutputLabel".Translate(), ref settings.solarController_maxOutput);
-                listing_Standard.AddLabeledNumericalTextField<float>("ER_WattagePerSolarPanelLabel".Translate(), ref settings.solarController_wattagePerSolarPanel);
-                listing_Standard.AddLabeledCheckbox("ER_GlassLights".Translate(), ref settings.glassLights);
-                listing_Standard.AddLabeledCheckbox("ER_RoofMaintenance".Translate(), ref settings.roofMaintenance);
+                listing_Standard.TextFieldNumericLabeled<float>("ER_MaxOutputLabel".Translate(), ref settings.solarController_maxOutput, ref maxOutputBuffer);
+                listing_Standard.TextFieldNumericLabeled<float>("ER_WattagePerSolarPanelLabel".Translate(), ref settings.solarController_wattagePerSolarPanel, ref wattagePerSolarPanel);
+                listing_Standard.CheckboxLabeled("ER_GlassLights".Translate(), ref settings.glassLights);
+                listing_Standard.CheckboxLabeled("ER_RoofMaintenance".Translate(), ref settings.roofMaintenance);
                 listing_Standard.End();
                 settings.Write();
             }

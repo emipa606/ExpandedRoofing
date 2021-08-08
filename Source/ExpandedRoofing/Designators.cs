@@ -77,9 +77,9 @@ namespace ExpandedRoofing
                 ThingDef stuff = null;
                 var val = FI_stuffDef.GetValue(this);
                 if (val != null) stuff = (ThingDef)val;
-                GenConstruct.PlaceBlueprintForBuild(this.entDef, c, base.Map, this.placingRot, Faction.OfPlayer, stuff);
+                GenConstruct.PlaceBlueprintForBuild_NewTemp(this.entDef, c, base.Map, this.placingRot, Faction.OfPlayer, stuff);
             }
-            MoteMaker.ThrowMetaPuffs(GenAdj.OccupiedRect(c, this.placingRot, this.entDef.Size), base.Map);
+            //MoteMaker.ThrowMetaPuffs(GenAdj.OccupiedRect(c, this.placingRot, this.entDef.Size), base.Map);
             if (this.entDef is ThingDef && (this.entDef as ThingDef).IsOrbitalTradeBeacon)
             {
                 PlayerKnowledgeDatabase.KnowledgeDemonstrated(ConceptDefOf.BuildOrbitalTradeBeacon, KnowledgeAmount.Total);
