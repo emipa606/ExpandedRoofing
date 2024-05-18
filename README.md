@@ -1,23 +1,20 @@
 # [Expanded Roofing (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=2026595894)
 
 ![Image](https://i.imgur.com/WAEzk68.png)
-Steam-upload of Why_is_thats mod
+Update of Why_is_thats mod https://steamcommunity.com/sharedfiles/filedetails/?id=1512478761 
+Uploaded to Steam by CrunchyDuck from the GitHub-repository https://github.com/AaronCRobinson/ExpandedRoofing
+Later updated to 1.1 and 1.2 by me
+Then continued by KiameV for 1.3: https://steamcommunity.com/sharedfiles/filedetails/?id=2568893936
+Then NigrumMortis to 1.4: https://steamcommunity.com/sharedfiles/filedetails/?id=2879451927
 
-[hr]There is a 1.3 release of this mod [https://steamcommunity.com/sharedfiles/filedetails/?id=2568893936](here)
-This version will not be further updated.[hr]
+- Added a power-bar to the solar roof controller to visualize current power as well as show if there are need for more controllers.
 
-![Image](https://i.imgur.com/CN9Rs5X.png)
+![Image](https://i.imgur.com/pufA0kM.png)
 	
-![Image](https://i.imgur.com/NOW7jU1.png)
-
+![Image](https://i.imgur.com/Z4GOv8H.png)
 Adds customizable roofing, with transparent greenhouse roofing and photovoltaic solar roofing. Reworked from Vendan's original idea.
 A direct port of the [https://github.com/AaronCRobinson/ExpandedRoofing](Github version made by **AaronCRobinson.**) I take no credit for anything made in this mod.
 **Works on 0.19.0 as well as 1.0.0.**
-
-# Bug reporting
-
-I'm putting this at the top to clear up some confusion.
-The Steam workshop comments aren't the location to report bugs for this mod. I don't own this mod, and Why_Is_That, the actual owner, doesn't read the comments here. If you have a bug that you feel needs fixing, please report it on the **[https://github.com/AaronCRobinson/ExpandedRoofing](Github page)**
 
 # Features
 
@@ -71,8 +68,6 @@ Special thanks to Pardeike's amazing non-destructive patching library, Harmony.
 
 [https://github.com/pardeike/Harmony]![Image]((https://raw.githubusercontent.com/pardeike/Harmony/master/HarmonyLogo.png))
 
-[https://steamcommunity.com/sharedfiles/filedetails/changelog/2026595894]![Image]((https://img.shields.io/github/v/release/emipa606/ExpandedRoofing?label=latest%20version&style=plastic&color=9f1111&labelColor=black))
-
 ![Image](https://i.imgur.com/PwoNOj4.png)
 
 
@@ -85,3 +80,5 @@ Special thanks to Pardeike's amazing non-destructive patching library, Harmony.
 -  Use [https://github.com/RimSort/RimSort/releases/latest](RimSort) to sort your mods
 
 
+
+[https://steamcommunity.com/sharedfiles/filedetails/changelog/2026595894]![Image]((https://img.shields.io/github/v/release/emipa606/ExpandedRoofing?label=latest%20version&style=plastic&color=9f1111&labelColor=black))
