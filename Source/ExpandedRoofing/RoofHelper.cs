@@ -1,9 +1,11 @@
-﻿using Verse;
+using Verse;
 
-namespace ExpandedRoofing
+namespace ExpandedRoofing;
+
+internal static class RoofHelper
 {
-    internal static class RoofHelper
+    public static bool IsBuildableThickRoof(this RoofDef roofDef)
     {
-        public static bool IsBuildableThickRoof(this RoofDef roofDef) => roofDef != null && roofDef.isThickRoof && roofDef.HasModExtension<RoofExtension>();
+        return roofDef is { isThickRoof: true } && roofDef.HasModExtension<RoofExtension>();
     }
 }

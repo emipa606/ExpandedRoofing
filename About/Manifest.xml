@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Manifest>
-    <identifier>ExpandedRoofing</identifier>
-    <version>1.3.0</version>
-    <!--<loadBefore>
-        <li>HowManyModsDoesOneNeed >= 9000.1</li>
-    </loadBefore>
-    <loadAfter>
-        <li>ToModOrNotToMod</li>
-    </loadAfter>-->
-    <manifestUri>https://raw.githubusercontent.com/AaronCRobinson/ExpandedRoofing/master/About/Manifest.xml</manifestUri>
-    <downloadUri>https://github.com/KiameV/ExpandedRoofing/releases/tag/v1.3.0.0</downloadUri>
+  <identifier>ExpandedRoofing</identifier>
+  <version>1.5.1</version>
+  <dependencies />
+  <incompatibleWith />
+  <loadBefore />
+  <loadAfter />
+  <manifestUri>https://raw.githubusercontent.com/emipa606/ExpandedRoofing/master/About/Manifest.xml</manifestUri>
+  <downloadUri>https://github.com/emipa606/ExpandedRoofing/releases</downloadUri>
 </Manifest>

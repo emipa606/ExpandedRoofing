@@ -1,174 +1,203 @@
-﻿using HarmonyLib;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using HarmonyLib;
 using Verse;
-using static ExpandedRoofing.SolarRoofingTracker;
 
-namespace ExpandedRoofing
+namespace ExpandedRoofing;
+
+public class SolarRoofingTracker
 {
-    // TODO: consider consolidating MapComponents
-    public class SolarRoofing_MapComponent : MapComponent
+    private static readonly FieldInfo FI_RoofGrid_roofGrid = AccessTools.Field(typeof(RoofGrid), "roofGrid");
+
+    private static int nextId;
+
+    private readonly Dictionary<int, SolarGridSet> cellSets = new Dictionary<int, SolarGridSet>();
+
+    private readonly List<Thing> isolatedControllers = [];
+
+    public SolarRoofingTracker(Map map)
     {
-        public SolarRoofingTracker tracker;
-        public SolarRoofing_MapComponent(Map map) : base(map)
+        if (FI_RoofGrid_roofGrid.GetValue(map.roofGrid) is RoofDef[] array)
         {
-            this.tracker = new SolarRoofingTracker(map);
+            for (var i = 0; i < array.Length; i++)
+            {
+                if (array[i] == RoofDefOf.RoofSolar)
+                {
+                    AddSolarCell(map.cellIndices.IndexToCell(i));
+                }
+            }
+        }
+
+        foreach (var item in map.listerBuildings.AllBuildingsColonistOfDef(ThingDefOf.SolarController))
+        {
+            AddController(item);
         }
     }
 
-    // NOTE: no need for ExposeData (just recount when map is loaded -- not a long operation)
-    public class SolarRoofingTracker
+    private int NextId => nextId++;
+
+    public void AddSolarCell(IntVec3 cell)
     {
-        private static readonly FieldInfo FI_RoofGrid_roofGrid = AccessTools.Field(typeof(RoofGrid), "roofGrid");
-        private static int nextId=0;
-        private int NextId { get => SolarRoofingTracker.nextId++; }
-
-        public class SolarGridSet
+        var hashSet = new HashSet<int>();
+        foreach (var cellSet in cellSets)
         {
-            public HashSet<IntVec3> set = new HashSet<IntVec3>();
-            public HashSet<Thing> controllers = new HashSet<Thing>();
-
-            public SolarGridSet() { }
-            public SolarGridSet(IntVec3 cell) : base() => set.Add(cell);
-
-            public void UnionWith(SolarGridSet other)
+            for (var i = 0; i < 5; i++)
             {
-                this.set.UnionWith(other.set);
-                this.controllers.UnionWith(other.controllers);
-            }
-
-            public int RoofCount { get => this.set.Count; }
-            public int ControllerCount { get => this.controllers.Count; }
-        }
-
-        private Dictionary<int, SolarGridSet> cellSets = new Dictionary<int, SolarGridSet>();
-        private List<Thing> isolatedControllers = new List<Thing>();
-
-        public SolarRoofingTracker(Map map)
-        {
-            // use map to init
-            RoofDef[] roofGrid = FI_RoofGrid_roofGrid.GetValue(map.roofGrid) as RoofDef[];
-
-            for (int i = 0; i < roofGrid.Length; i++)
-                if (roofGrid[i] == RoofDefOf.RoofSolar)
-                    this.AddSolarCell(map.cellIndices.IndexToCell(i));
-
-            foreach (Thing controller in map.listerBuildings.AllBuildingsColonistOfDef(ThingDefOf.SolarController))
-                this.AddController(controller);
-        }
-
-        public void AddSolarCell(IntVec3 cell)
-        {
-            // grids found that connect to the new cell
-            HashSet<int> found = new HashSet<int>();
-            foreach (KeyValuePair<int, SolarGridSet> pair in cellSets)
-            {
-                // using cardinal because it will be faster...
-                for (int i = 0; i < 5; i++)
+                if (!cellSet.Value.set.Contains(cell + GenAdj.CardinalDirectionsAndInside[i]))
                 {
-                    if (pair.Value.set.Contains(cell + GenAdj.CardinalDirectionsAndInside[i]))
+                    continue;
+                }
+
+                hashSet.Add(cellSet.Key);
+                break;
+            }
+        }
+
+        var num = 0;
+        switch (hashSet.Count)
+        {
+            case 0:
+            {
+                var value = new SolarGridSet(cell);
+                num = NextId;
+                cellSets.Add(num, value);
+                break;
+            }
+            case 1:
+                num = hashSet.First();
+                cellSets[num].set.Add(cell);
+                break;
+            default:
+            {
+                var num2 = hashSet.ElementAt(num);
+                cellSets[num2].set.Add(cell);
+                for (var j = 1; j < hashSet.Count; j++)
+                {
+                    foreach (var controller in cellSets[hashSet.ElementAt(j)].controllers)
                     {
-                        found.Add(pair.Key);
-                        break; // return to main loop
+                        controller.TryGetComp<CompPowerPlantSolarController>().NetId = num2;
                     }
+
+                    cellSets[num2].UnionWith(cellSets[hashSet.ElementAt(j)]);
+                    cellSets.Remove(hashSet.ElementAt(j));
                 }
-            }
 
-            int idx = 0;
-#if DEBUG
-            Log.Message($"SolarRoofingTracker.AddSolarCell: {idx} -> case {found.Count()}");
-#endif
-            switch (found.Count)
-            {
-                case 0: // new grid
-                    SolarGridSet s = new SolarGridSet(cell);
-                    idx = NextId;
-                    cellSets.Add(idx, s);
-                    break;
-                case 1: // 1 match
-                    idx = found.First();
-                    cellSets[idx].set.Add(cell);
-                    break;
-                default: // merger
-                    int mergerKey = found.ElementAt(idx);
-                    cellSets[mergerKey].set.Add(cell);
-                    for (int i = 1; i < found.Count; i++)
-                    {
-                        foreach(Thing controller in cellSets[found.ElementAt(i)].controllers)
-                        {
-                            controller.TryGetComp<CompPowerPlantSolarController>().NetId = mergerKey;
-                        }
-                        cellSets[mergerKey].UnionWith(cellSets[found.ElementAt(i)]);
-                        cellSets.Remove(found.ElementAt(i));
-                    }
-                    break;
+                break;
             }
-
-            //check isolated controllers
-            List<Thing> del = new List<Thing>();
-            foreach (Thing controller in isolatedControllers)
-            {
-                bool @break = false;
-                for (int i = -1; i < controller.RotatedSize.x + 1 && !@break; i++)
-                {
-                    for (int j = -1; j < controller.RotatedSize.z + 1 && !@break; j++)
-                    {
-                        if (cell == controller.Position + new IntVec3(i, 0, j))
-                        {
-
-                            cellSets[idx].controllers.Add(controller);
-                            del.Add(controller);
-                            controller.TryGetComp<CompPowerPlantSolarController>().NetId = idx;
-                            @break = true;
-                        }
-                    }
-                }
-            }
-            foreach (Thing d in del)
-                isolatedControllers.Remove(d);
         }
 
-        // TODO: move common logic to method.
-        public void RemoveSolarCell(IntVec3 cell)
+        var list = new List<Thing>();
+        foreach (var isolatedController in isolatedControllers)
         {
-            foreach (SolarGridSet gs in cellSets.Values)
+            var foundNetId = false;
+            for (var k = -1; k < isolatedController.RotatedSize.x + 1; k++)
             {
-                if (gs.set.Contains(cell))
+                if (foundNetId)
                 {
-                    gs.set.Remove(cell);
-                    return;
+                    break;
+                }
+
+                for (var l = -1; l < isolatedController.RotatedSize.z + 1; l++)
+                {
+                    if (foundNetId)
+                    {
+                        break;
+                    }
+
+                    if (cell != isolatedController.Position + new IntVec3(k, 0, l))
+                    {
+                        continue;
+                    }
+
+                    cellSets[num].controllers.Add(isolatedController);
+                    list.Add(isolatedController);
+                    isolatedController.TryGetComp<CompPowerPlantSolarController>().NetId = num;
+                    foundNetId = true;
                 }
             }
-            Log.Error($"ExpandedRoofing: SolarRoofingTracker.Remove on a bad cell ({cell}).");
         }
 
-        // NOTE: ignoring case of controller connects to two grids...
-        public void AddController(Thing controller)
+        foreach (var item in list)
         {
-            HashSet<IntVec3> connects = new HashSet<IntVec3>();
+            isolatedControllers.Remove(item);
+        }
+    }
 
-            for (int i = -1; i < controller.RotatedSize.x + 1; i++)
-                for (int j = -1; j < controller.RotatedSize.z + 1; j++)
-                    connects.Add(controller.Position + new IntVec3(i, 0, j));
-
-            foreach (KeyValuePair<int, SolarGridSet> pair in cellSets)
+    public void RemoveSolarCell(IntVec3 cell)
+    {
+        foreach (var value in cellSets.Values)
+        {
+            if (!value.set.Contains(cell))
             {
-                if (connects.Any(iv3 => pair.Value.set.Contains(iv3)))
-                {
-                    pair.Value.controllers.Add(controller);
-                    // this should never fail...
-                    controller.TryGetComp<CompPowerPlantSolarController>().NetId = pair.Key;
-                    return;
-                }
+                continue;
             }
-            isolatedControllers.Add(controller);
+
+            value.set.Remove(cell);
             return;
         }
 
-        public void RemoveController(Thing controller) => cellSets[controller.TryGetComp<CompPowerPlantSolarController>().NetId].controllers.Remove(controller);
+        Log.Error($"ExpandedRoofing: SolarRoofingTracker.Remove on a bad cell ({cell}).");
+    }
 
-        public SolarGridSet GetCellSets(int? netId) => netId != null ? cellSets[(int)netId] : null;
+    public void AddController(Thing controller)
+    {
+        var hashSet = new HashSet<IntVec3>();
+        for (var i = -1; i < controller.RotatedSize.x + 1; i++)
+        {
+            for (var j = -1; j < controller.RotatedSize.z + 1; j++)
+            {
+                hashSet.Add(controller.Position + new IntVec3(i, 0, j));
+            }
+        }
 
+        foreach (var pair in cellSets)
+        {
+            if (!hashSet.Any(iv3 => pair.Value.set.Contains(iv3)))
+            {
+                continue;
+            }
+
+            pair.Value.controllers.Add(controller);
+            controller.TryGetComp<CompPowerPlantSolarController>().NetId = pair.Key;
+            return;
+        }
+
+        isolatedControllers.Add(controller);
+    }
+
+    public void RemoveController(Thing controller)
+    {
+        var foundNetId = controller.TryGetComp<CompPowerPlantSolarController>().NetId;
+        if (cellSets.TryGetValue(foundNetId, out var set))
+        {
+            set.controllers.Remove(controller);
+        }
+    }
+
+    public SolarGridSet GetCellSets(int? netId)
+    {
+        return !netId.HasValue ? null : cellSets[netId.Value];
+    }
+
+    public class SolarGridSet
+    {
+        public readonly HashSet<Thing> controllers = [];
+        public readonly HashSet<IntVec3> set = [];
+
+        public SolarGridSet(IntVec3 cell)
+        {
+            set.Add(cell);
+        }
+
+        public int RoofCount => set.Count;
+
+        public int ControllerCount => controllers.Count;
+
+        public void UnionWith(SolarGridSet other)
+        {
+            set.UnionWith(other.set);
+            controllers.UnionWith(other.controllers);
+        }
     }
 }
