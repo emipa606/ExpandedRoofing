@@ -4,7 +4,7 @@ using System.Reflection.Emit;
 using HarmonyLib;
 using Verse;
 
-namespace ExpandedRoofing;
+namespace ExpandedRoofing.HarmonyPatches;
 
 [StaticConstructorOnStartup]
 internal class RoofMaintenance_Patches

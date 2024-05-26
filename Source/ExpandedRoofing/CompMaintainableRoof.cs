@@ -8,7 +8,7 @@ public class CompMaintainableRoof : CompCustomRoof
     {
         if (parent.Stuff != null)
         {
-            var named = DefDatabase<RoofDef>.GetNamed(parent.Stuff.defName.Replace("Blocks", "") + "ThickStoneRoof",
+            var named = DefDatabase<RoofDef>.GetNamed($"{parent.Stuff.defName.Replace("Blocks", "")}ThickStoneRoof",
                 false);
             parent.Map.roofGrid.SetRoof(parent.Position, named);
         }

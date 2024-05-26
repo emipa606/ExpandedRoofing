@@ -15,7 +15,7 @@ internal static class TranspilerHelper
         }
 
         num = map.skyManager.CurSkyGlow * roofExtension.transparency;
-        return num == 1f;
+        return true;
     }
 
     private static int KillFinalize(int count)
@@ -33,7 +33,7 @@ internal static class TranspilerHelper
         var thingOwner = new ThingOwner<Thing>();
         var text = curRoof.defName.Replace("ThickStoneRoof", "");
         var thingDef = text != "Jade"
-            ? DefDatabase<ThingDef>.GetNamed("Blocks" + text, false)
+            ? DefDatabase<ThingDef>.GetNamed($"Blocks{text}", false)
             : DefDatabase<ThingDef>.GetNamed(text, false);
         foreach (var item in spawnerDef.CostListAdjusted(thingDef))
         {

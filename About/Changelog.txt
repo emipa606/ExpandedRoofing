@@ -1,5 +1,8 @@
 # Changelog for ExpandedRoofing
 
+1.5.2 - Now the transparent roof will work regardless of the outside-light level
+
+
 1.5.1 - Updated for 1.5, added some qol for the solar controller
 Used DeepL to update translations for ChineseSimplified, French, German, Japanese, Russian, Spanish, Turkish
 
