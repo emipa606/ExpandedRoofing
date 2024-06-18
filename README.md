@@ -1,6 +1,7 @@
 # [Expanded Roofing (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=2026595894)
 
 ![Image](https://i.imgur.com/WAEzk68.png)
+
 Update of Why_is_thats mod https://steamcommunity.com/sharedfiles/filedetails/?id=1512478761 
 Uploaded to Steam by CrunchyDuck from the GitHub-repository https://github.com/AaronCRobinson/ExpandedRoofing
 Later updated to 1.1 and 1.2 by me
@@ -12,8 +13,9 @@ Then NigrumMortis to 1.4: https://steamcommunity.com/sharedfiles/filedetails/?id
 ![Image](https://i.imgur.com/pufA0kM.png)
 	
 ![Image](https://i.imgur.com/Z4GOv8H.png)
+
 Adds customizable roofing, with transparent greenhouse roofing and photovoltaic solar roofing. Reworked from Vendan's original idea.
-A direct port of the [https://github.com/AaronCRobinson/ExpandedRoofing](Github version made by **AaronCRobinson.**) I take no credit for anything made in this mod.
+A direct port of the [Github version made by **AaronCRobinson.**](https://github.com/AaronCRobinson/ExpandedRoofing) I take no credit for anything made in this mod.
 **Works on 0.19.0 as well as 1.0.0.**
 
 # Features
@@ -66,19 +68,20 @@ Thank to Erdelf for getting me back on track and Xen for designator artwork.
 
 Special thanks to Pardeike's amazing non-destructive patching library, Harmony.
 
-[https://github.com/pardeike/Harmony]![Image]((https://raw.githubusercontent.com/pardeike/Harmony/master/HarmonyLogo.png))
+[![Image](https://raw.githubusercontent.com/pardeike/Harmony/master/HarmonyLogo.png)](https://github.com/pardeike/Harmony)
 
 ![Image](https://i.imgur.com/PwoNOj4.png)
 
 
+
 -  See if the the error persists if you just have this mod and its requirements active.
 -  If not, try adding your other mods until it happens again.
--  Post your error-log using [https://steamcommunity.com/workshop/filedetails/?id=818773962]HugsLib[/url] or the standalone [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404](Uploader) and command Ctrl+F12
+-  Post your error-log using [HugsLib](https://steamcommunity.com/workshop/filedetails/?id=818773962) or the standalone [Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) and command Ctrl+F12
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.
--  Use [https://github.com/RimSort/RimSort/releases/latest](RimSort) to sort your mods
+-  Use [RimSort](https://github.com/RimSort/RimSort/releases/latest) to sort your mods
 
 
 
-[https://steamcommunity.com/sharedfiles/filedetails/changelog/2026595894]![Image]((https://img.shields.io/github/v/release/emipa606/ExpandedRoofing?label=latest%20version&style=plastic&color=9f1111&labelColor=black))
+[![Image](https://img.shields.io/github/v/release/emipa606/ExpandedRoofing?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2026595894)

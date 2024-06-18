@@ -50,11 +50,18 @@ internal class RoofMaintenance_Patches
 
     public static void SetRoofHelper(Map map, IntVec3 c, RoofDef def)
     {
+        if (def == null)
+        {
+            return;
+        }
+
         if (def.IsBuildableThickRoof())
         {
             map.GetComponent<RoofMaintenance_MapComponenent>()?.AddMaintainableRoof(c);
+            return;
         }
-        else if (map.roofGrid.RoofAt(c).IsBuildableThickRoof())
+
+        if (map.roofGrid.RoofAt(c).IsBuildableThickRoof())
         {
             map.GetComponent<RoofMaintenance_MapComponenent>()?.RemoveMaintainableRoof(c);
         }

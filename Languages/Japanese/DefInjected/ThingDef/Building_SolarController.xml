@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <SolarController.label>太陽光コントローラー</SolarController.label>
   <SolarController.description>太陽光発電パネルの制御用インターフェイス。</SolarController.description>

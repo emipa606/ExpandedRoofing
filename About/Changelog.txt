@@ -1,5 +1,8 @@
 # Changelog for ExpandedRoofing
 
+1.5.3 - Should now be possible to build thick stone roofs from modded materials
+
+
 1.5.2 - Now the transparent roof will work regardless of the outside-light level
 
 

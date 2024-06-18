@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using RimWorld;
@@ -21,6 +22,24 @@ internal class DynamicDefs
         ImpliedBlueprintAndFrameDefs(ThingDefOf.RoofTransparentFraming);
         ImpliedBlueprintAndFrameDefs(ThingDefOf.RoofSolarFraming);
         ImpliedBlueprintAndFrameDefs(ThingDefOf.ThickStoneRoofFraming);
+
+        foreach (var thingDef in DefDatabase<ThingDef>.AllDefsListForReading.Where(def =>
+                     def.IsStuff &&
+                     def.stuffProps?.categories?.Any(categoryDef => categoryDef == StuffCategoryDefOf.Stony) ==
+                     true &&
+                     def.modContentPack?.IsOfficialMod == false))
+        {
+            var newRoof = new RoofDef
+            {
+                isThickRoof = true,
+                collapseLeavingThingDef = thingDef,
+                defName = $"{thingDef.defName.Replace("Blocks", "")}ThickStoneRoof",
+                label = $"{thingDef.LabelCap.Replace("blocks", "").Trim()} Thick Stone Roof"
+            };
+
+            DefGenerator.AddImpliedDef(newRoof);
+            InjectedDefHasher.GiveShortHasToDef(newRoof, typeof(RoofDef));
+        }
     }
 
     private static void ImpliedBlueprintAndFrameDefs(ThingDef thingDef)
