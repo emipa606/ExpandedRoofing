@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: solar controller -->
+  <SolarController.label>solar controller</SolarController.label>
+  <!-- EN: Interfaces with solar roof panels. -->
+  <SolarController.description>Interfaces with solar roof panels.</SolarController.description>
+</LanguageData>

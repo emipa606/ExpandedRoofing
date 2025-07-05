@@ -8,9 +8,9 @@ namespace ExpandedRoofing;
 [StaticConstructorOnStartup]
 public class CompPowerPlantSolarController : CompPowerPlant
 {
-    private static readonly Color color = new Color(0.3f, 1f, 0.4f);
+    private static readonly Color color = new(0.3f, 1f, 0.4f);
 
-    private static readonly Vector2 BarSize = new Vector2(1.4f, 0.07f);
+    private static readonly Vector2 BarSize = new(1.4f, 0.07f);
 
     private static readonly Material PowerPlantSolarBarFilledMat =
         SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.5f, 0.475f, 0.1f));
@@ -41,13 +41,13 @@ public class CompPowerPlantSolarController : CompPowerPlant
         set => netId = value;
     }
 
-    public float WattagePerSolarPanel => ExpandedRoofingMod.settings.solarController_wattagePerSolarPanel;
+    private float WattagePerSolarPanel => ExpandedRoofingMod.settings.solarController_wattagePerSolarPanel;
 
-    public float MaxOutput => netId.HasValue ? ExpandedRoofingMod.settings.solarController_maxOutput : 0f;
+    private float MaxOutput => netId.HasValue ? ExpandedRoofingMod.settings.solarController_maxOutput : 0f;
 
-    public int RoofCount => netId.HasValue ? solarRoofingTracker.GetCellSets(netId).RoofCount : 0;
+    private int RoofCount => netId.HasValue ? solarRoofingTracker.GetCellSets(netId).RoofCount : 0;
 
-    public int ControllerCount => solarRoofingTracker.GetCellSets(netId).ControllerCount;
+    private int ControllerCount => solarRoofingTracker.GetCellSets(netId).ControllerCount;
 
     protected override float DesiredPowerOutput
     {
@@ -84,14 +84,9 @@ public class CompPowerPlantSolarController : CompPowerPlant
         return returnString;
     }
 
-    public Color GetCellExtraColor(int index)
+    public override void PostDeSpawn(Map map, DestroyMode mode = DestroyMode.Vanish)
     {
-        return Color.white;
-    }
-
-    public override void PostDeSpawn(Map map)
-    {
-        base.PostDeSpawn(map);
+        base.PostDeSpawn(map, mode);
         map.GetComponent<SolarRoofing_MapComponent>().tracker.RemoveController(parent);
     }
 

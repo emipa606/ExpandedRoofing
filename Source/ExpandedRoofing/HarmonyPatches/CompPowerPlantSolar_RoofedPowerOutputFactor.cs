@@ -11,7 +11,7 @@ public static class CompPowerPlantSolar_RoofedPowerOutputFactor
 {
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
     {
-        var MI_FixRoofedPowerOutputFactor = AccessTools.Method(typeof(TranspilerHelper),
+        var miFixRoofedPowerOutputFactor = AccessTools.Method(typeof(TranspilerHelper),
             nameof(TranspilerHelper.FixRoofedPowerOutputFactor));
         var instructionList = instructions.ToList();
         var skipping = false;
@@ -34,7 +34,7 @@ public static class CompPowerPlantSolar_RoofedPowerOutputFactor
                 yield return new CodeInstruction(OpCodes.Ldarg_0);
                 yield return new CodeInstruction(OpCodes.Ldloc_2);
                 yield return new CodeInstruction(OpCodes.Ldloca, 1);
-                yield return new CodeInstruction(OpCodes.Call, MI_FixRoofedPowerOutputFactor);
+                yield return new CodeInstruction(OpCodes.Call, miFixRoofedPowerOutputFactor);
                 skipping = true;
             }
             else

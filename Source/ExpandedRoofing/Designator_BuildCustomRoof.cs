@@ -7,15 +7,9 @@ namespace ExpandedRoofing;
 
 public class Designator_BuildCustomRoof(BuildableDef entDef, RoofDef rDef) : Designator_Build(entDef)
 {
-    private readonly FieldInfo FI_stuffDef = AccessTools.Field(typeof(Designator_Build), "stuffDef");
+    private readonly FieldInfo fiStuffDef = AccessTools.Field(typeof(Designator_Build), "stuffDef");
 
-    protected readonly RoofDef roofDef = rDef;
-
-    private MethodInfo MI_SetBuildingToReinstall =
-        AccessTools.Method(typeof(Blueprint_Install), "SetBuildingToReinstall");
-
-    private MethodInfo MI_SetThingToInstallFromMinified =
-        AccessTools.Method(typeof(Blueprint_Install), "SetThingToInstallFromMinified");
+    private readonly RoofDef roofDef = rDef;
 
     public override BuildableDef PlacingDef => entDef;
 
@@ -51,7 +45,7 @@ public class Designator_BuildCustomRoof(BuildableDef entDef, RoofDef rDef) : Des
             else
             {
                 ThingDef stuff = null;
-                var value = FI_stuffDef.GetValue(this);
+                var value = fiStuffDef.GetValue(this);
                 if (value != null)
                 {
                     stuff = (ThingDef)value;
@@ -66,7 +60,7 @@ public class Designator_BuildCustomRoof(BuildableDef entDef, RoofDef rDef) : Des
         {
             Map.areaManager.NoRoof[c] = false;
             ThingDef stuff2 = null;
-            var value2 = FI_stuffDef.GetValue(this);
+            var value2 = fiStuffDef.GetValue(this);
             if (value2 != null)
             {
                 stuff2 = (ThingDef)value2;

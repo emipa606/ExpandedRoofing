@@ -8,17 +8,17 @@ namespace ExpandedRoofing;
 
 public class SolarRoofingTracker
 {
-    private static readonly FieldInfo FI_RoofGrid_roofGrid = AccessTools.Field(typeof(RoofGrid), "roofGrid");
+    private static readonly FieldInfo fiRoofGridRoofGrid = AccessTools.Field(typeof(RoofGrid), "roofGrid");
 
     private static int nextId;
 
-    private readonly Dictionary<int, SolarGridSet> cellSets = new Dictionary<int, SolarGridSet>();
+    private readonly Dictionary<int, SolarGridSet> cellSets = new();
 
     private readonly List<Thing> isolatedControllers = [];
 
     public SolarRoofingTracker(Map map)
     {
-        if (FI_RoofGrid_roofGrid.GetValue(map.roofGrid) is RoofDef[] array)
+        if (fiRoofGridRoofGrid.GetValue(map.roofGrid) is RoofDef[] array)
         {
             for (var i = 0; i < array.Length; i++)
             {

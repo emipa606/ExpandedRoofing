@@ -12,7 +12,7 @@ internal sealed class RoofMaintenanceGrid(Map map) : IExposable
 
     private const int minTicksBeforeMTBCollapses = 7500;
 
-    private Dictionary<int, int> grid = new Dictionary<int, int>();
+    private Dictionary<int, int> grid = new();
 
     public IEnumerable<IntVec3> CurrentlyRequiresMaintenance
     {

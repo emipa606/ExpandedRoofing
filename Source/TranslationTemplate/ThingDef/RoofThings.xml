@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: solar roofing -->
+  <RoofSolarFraming.label>solar roofing</RoofSolarFraming.label>
+  <!-- EN: Solar roofing generates power on your roof.  Requires a Solar Controller to function. -->
+  <RoofSolarFraming.description>Solar roofing generates power on your roof.  Requires a Solar Controller to function.</RoofSolarFraming.description>
+  <!-- EN: transparent roofing -->
+  <RoofTransparentFraming.label>transparent roofing</RoofTransparentFraming.label>
+  <!-- EN: Transparent roofing lets the light through, but keeps the weather out! -->
+  <RoofTransparentFraming.description>Transparent roofing lets the light through, but keeps the weather out!</RoofTransparentFraming.description>
+  <!-- EN: thick stone roofing -->
+  <ThickStoneRoofFraming.label>thick stone roofing</ThickStoneRoofFraming.label>
+  <!-- EN: Provides a thick roofing to keep drop pods out. -->
+  <ThickStoneRoofFraming.description>Provides a thick roofing to keep drop pods out.</ThickStoneRoofFraming.description>
+</LanguageData>

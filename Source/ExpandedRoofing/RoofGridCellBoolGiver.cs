@@ -36,13 +36,13 @@ public class RoofGridCellBoolGiver
     public static IEnumerable<CodeInstruction> RoofGridExtraColorDetour(IEnumerable<CodeInstruction> instructions,
         ILGenerator il)
     {
-        var FI_RoofGrid_roofGrid = AccessTools.Field(typeof(RoofGrid), "roofGrid");
-        var MI_GetCellExtraColor = typeof(RoofGridCellBoolGiver).GetMethod("GetCellExtraColor");
+        var fiRoofGridRoofGrid = AccessTools.Field(typeof(RoofGrid), "roofGrid");
+        var miGetCellExtraColor = typeof(RoofGridCellBoolGiver).GetMethod("GetCellExtraColor");
         yield return new CodeInstruction(OpCodes.Ldarg_0);
-        yield return new CodeInstruction(OpCodes.Ldfld, FI_RoofGrid_roofGrid);
+        yield return new CodeInstruction(OpCodes.Ldfld, fiRoofGridRoofGrid);
         yield return new CodeInstruction(OpCodes.Ldarg_1);
         yield return new CodeInstruction(OpCodes.Ldelem_Ref);
-        yield return new CodeInstruction(OpCodes.Call, MI_GetCellExtraColor);
+        yield return new CodeInstruction(OpCodes.Call, miGetCellExtraColor);
         yield return new CodeInstruction(OpCodes.Ret);
     }
 

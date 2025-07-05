@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: granite thick stone roof -->
+  <GraniteThickStoneRoof.label>granite thick stone roof</GraniteThickStoneRoof.label>
+  <!-- EN: Thick stone roofing. Helps keep out the drop pods and mortar rounds. -->
+  <GraniteThickStoneRoof.description>Thick stone roofing. Helps keep out the drop pods and mortar rounds.</GraniteThickStoneRoof.description>
+  <!-- EN: jade thick stone roof -->
+  <JadeThickStoneRoof.label>jade thick stone roof</JadeThickStoneRoof.label>
+  <!-- EN: Thick stone roofing. Helps keep out the drop pods and mortar rounds. -->
+  <JadeThickStoneRoof.description>Thick stone roofing. Helps keep out the drop pods and mortar rounds.</JadeThickStoneRoof.description>
+  <!-- EN: limestone thick stone roof -->
+  <LimestoneThickStoneRoof.label>limestone thick stone roof</LimestoneThickStoneRoof.label>
+  <!-- EN: Thick stone roofing. Helps keep out the drop pods and mortar rounds. -->
+  <LimestoneThickStoneRoof.description>Thick stone roofing. Helps keep out the drop pods and mortar rounds.</LimestoneThickStoneRoof.description>
+  <!-- EN: marble thick stone roof -->
+  <MarbleThickStoneRoof.label>marble thick stone roof</MarbleThickStoneRoof.label>
+  <!-- EN: Thick stone roofing. Helps keep out the drop pods and mortar rounds. -->
+  <MarbleThickStoneRoof.description>Thick stone roofing. Helps keep out the drop pods and mortar rounds.</MarbleThickStoneRoof.description>
+  <!-- EN: solar roof -->
+  <RoofSolar.label>solar roof</RoofSolar.label>
+  <!-- EN: Solar roofing generates power on your roof. Requires a Solar Controller to function. -->
+  <RoofSolar.description>Solar roofing generates power on your roof. Requires a Solar Controller to function.</RoofSolar.description>
+  <!-- EN: transparent roof -->
+  <RoofTransparent.label>transparent roof</RoofTransparent.label>
+  <!-- EN: Transparent roofing lets the light through, but keeps the weather out! -->
+  <RoofTransparent.description>Transparent roofing lets the light through, but keeps the weather out!</RoofTransparent.description>
+  <!-- EN: sandstone thick stone roof -->
+  <SandstoneThickStoneRoof.label>sandstone thick stone roof</SandstoneThickStoneRoof.label>
+  <!-- EN: Thick stone roofing. Helps keep out the drop pods and mortar rounds. -->
+  <SandstoneThickStoneRoof.description>Thick stone roofing. Helps keep out the drop pods and mortar rounds.</SandstoneThickStoneRoof.description>
+  <!-- EN: slate thick stone roof -->
+  <SlateThickStoneRoof.label>slate thick stone roof</SlateThickStoneRoof.label>
+  <!-- EN: Thick stone roofing. Helps keep out the drop pods and mortar rounds. -->
+  <SlateThickStoneRoof.description>Thick stone roofing. Helps keep out the drop pods and mortar rounds.</SlateThickStoneRoof.description>
+  <!-- EN: thick stone roof -->
+  <ThickStoneRoof.label>thick stone roof</ThickStoneRoof.label>
+  <!-- EN: Thick stone roofing. Helps keep out the drop pods and mortar rounds. -->
+  <ThickStoneRoof.description>Thick stone roofing. Helps keep out the drop pods and mortar rounds.</ThickStoneRoof.description>
+</LanguageData>

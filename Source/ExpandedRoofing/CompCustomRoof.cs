@@ -5,7 +5,7 @@ namespace ExpandedRoofing;
 
 public class CompCustomRoof : ThingComp
 {
-    public CompProperties_CustomRoof Props => (CompProperties_CustomRoof)props;
+    private CompProperties_CustomRoof Props => (CompProperties_CustomRoof)props;
 
     public override void PostSpawnSetup(bool respawningAfterLoad)
     {

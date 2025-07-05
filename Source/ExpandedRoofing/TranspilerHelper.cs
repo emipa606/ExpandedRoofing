@@ -52,7 +52,7 @@ internal static class TranspilerHelper
         var num2 = 0;
         while (thingOwner.Count > 0)
         {
-            if (!thingOwner.TryDrop(thingOwner[0], list[num2], map, ThingPlaceMode.Near, out var _))
+            if (!thingOwner.TryDrop(thingOwner[0], list[num2], map, ThingPlaceMode.Near, out _))
             {
                 Log.Warning($"Failed to place all leavings for destroyed thing {curRoof} at {leavingsRect.CenterCell}");
                 break;

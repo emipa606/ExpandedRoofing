@@ -9,7 +9,7 @@ public class JobDriver_PerformRoofMaintenance : JobDriver
 {
     private const float MaintenanceTicks = 80f;
 
-    protected float ticksToNextMaintenance;
+    private float ticksToNextMaintenance;
 
     public override bool TryMakePreToilReservations(bool errorOnFailed)
     {

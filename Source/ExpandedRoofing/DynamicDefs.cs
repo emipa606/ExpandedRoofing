@@ -9,19 +9,19 @@ namespace ExpandedRoofing;
 [StaticConstructorOnStartup]
 internal class DynamicDefs
 {
-    private static readonly MethodInfo MI_NewBlueprintDef_Thing;
+    private static readonly MethodInfo miNewBlueprintDefThing;
 
-    private static readonly MethodInfo MI_NewFrameDef_Thing;
+    private static readonly MethodInfo miNewFrameDefThing;
 
     static DynamicDefs()
     {
-        MI_NewBlueprintDef_Thing = AccessTools.Method(typeof(ThingDefGenerator_Buildings), "NewBlueprintDef_Thing");
-        MI_NewFrameDef_Thing = AccessTools.Method(typeof(ThingDefGenerator_Buildings), "NewFrameDef_Thing");
+        miNewBlueprintDefThing = AccessTools.Method(typeof(ThingDefGenerator_Buildings), "NewBlueprintDef_Thing");
+        miNewFrameDefThing = AccessTools.Method(typeof(ThingDefGenerator_Buildings), "NewFrameDef_Thing");
         Log.Message("ExpandedRoofing: generating dynamic defs");
         InjectedDefHasher.PrepareReflection();
-        ImpliedBlueprintAndFrameDefs(ThingDefOf.RoofTransparentFraming);
-        ImpliedBlueprintAndFrameDefs(ThingDefOf.RoofSolarFraming);
-        ImpliedBlueprintAndFrameDefs(ThingDefOf.ThickStoneRoofFraming);
+        impliedBlueprintAndFrameDefs(ThingDefOf.RoofTransparentFraming);
+        impliedBlueprintAndFrameDefs(ThingDefOf.RoofSolarFraming);
+        impliedBlueprintAndFrameDefs(ThingDefOf.ThickStoneRoofFraming);
 
         foreach (var thingDef in DefDatabase<ThingDef>.AllDefsListForReading.Where(def =>
                      def.IsStuff &&
@@ -42,12 +42,12 @@ internal class DynamicDefs
         }
     }
 
-    private static void ImpliedBlueprintAndFrameDefs(ThingDef thingDef)
+    private static void impliedBlueprintAndFrameDefs(ThingDef thingDef)
     {
-        var thingDef2 = MI_NewBlueprintDef_Thing.Invoke(null, [thingDef, false, null, false]) as ThingDef;
+        var thingDef2 = miNewBlueprintDefThing.Invoke(null, [thingDef, false, null, false]) as ThingDef;
         InjectedDefHasher.GiveShortHasToDef(thingDef2, typeof(ThingDef));
         DefDatabase<ThingDef>.Add(thingDef2);
-        thingDef2 = MI_NewFrameDef_Thing.Invoke(null, [thingDef, false]) as ThingDef;
+        thingDef2 = miNewFrameDefThing.Invoke(null, [thingDef, false]) as ThingDef;
         InjectedDefHasher.GiveShortHasToDef(thingDef2, typeof(ThingDef));
         if (thingDef.MadeFromStuff)
         {

@@ -10,14 +10,14 @@ namespace ExpandedRoofing;
 [StaticConstructorOnStartup]
 internal class FixFinishFrameBuildOrder
 {
-    private static readonly MethodInfo MI_ClosestThingReachable;
+    private static readonly MethodInfo miClosestThingReachable;
 
-    private static readonly MethodInfo MI_ClosestThingReachableWrapper;
+    private static readonly MethodInfo miClosestThingReachableWrapper;
 
     static FixFinishFrameBuildOrder()
     {
-        MI_ClosestThingReachable = AccessTools.Method(typeof(GenClosest), nameof(GenClosest.ClosestThingReachable));
-        MI_ClosestThingReachableWrapper =
+        miClosestThingReachable = AccessTools.Method(typeof(GenClosest), nameof(GenClosest.ClosestThingReachable));
+        miClosestThingReachableWrapper =
             AccessTools.Method(typeof(ClosestThingReachableHelper),
                 nameof(ClosestThingReachableHelper.ClosestThingReachableWrapper));
         new Harmony("rimworld.whyisthat.expandedroofing.fixbuildorder").Patch(
@@ -29,9 +29,9 @@ internal class FixFinishFrameBuildOrder
     {
         foreach (var instruction in instructions)
         {
-            if (instruction.opcode == OpCodes.Call && (MethodInfo)instruction.operand == MI_ClosestThingReachable)
+            if (instruction.opcode == OpCodes.Call && (MethodInfo)instruction.operand == miClosestThingReachable)
             {
-                yield return new CodeInstruction(OpCodes.Call, MI_ClosestThingReachableWrapper);
+                yield return new CodeInstruction(OpCodes.Call, miClosestThingReachableWrapper);
             }
             else
             {

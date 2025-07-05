@@ -5,7 +5,7 @@ namespace ExpandedRoofing;
 
 public class RoofMaintenance_MapComponenent(Map map) : MapComponent(map)
 {
-    private RoofMaintenanceGrid roofMaintenanceGrid = new RoofMaintenanceGrid(map);
+    private RoofMaintenanceGrid roofMaintenanceGrid = new(map);
 
     public IEnumerable<IntVec3> MaintenanceRequired => roofMaintenanceGrid.CurrentlyRequiresMaintenance;
 

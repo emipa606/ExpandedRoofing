@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LanguageData>
+  <!-- EN: scalable solar roofs -->
+  <SolarRoofProduction.label>scalable solar roofs</SolarRoofProduction.label>
+  <!-- EN: Advances in solar panels allows you to build solar controllers and solar roofs for scalable power solutions. -->
+  <SolarRoofProduction.description>Advances in solar panels allows you to build solar controllers and solar roofs for scalable power solutions.</SolarRoofProduction.description>
+  <!-- EN: thick stone roofs -->
+  <ThickStoneRoofProduction.label>thick stone roofs</ThickStoneRoofProduction.label>
+  <!-- EN: Allows you to build thick stone roofs which can block drop pods. -->
+  <ThickStoneRoofProduction.description>Allows you to build thick stone roofs which can block drop pods.</ThickStoneRoofProduction.description>
+  <!-- EN: thick stone roof removal -->
+  <ThickStoneRoofRemoval.label>thick stone roof removal</ThickStoneRoofRemoval.label>
+  <!-- EN: Allows you to remove thick stone roofs. -->
+  <ThickStoneRoofRemoval.description>Allows you to remove thick stone roofs.</ThickStoneRoofRemoval.description>
+  <!-- EN: transparent roofs -->
+  <TransparentRoofProduction.label>transparent roofs</TransparentRoofProduction.label>
+  <!-- EN: Allows you to build transparent roofs for indoor greenhouses. -->
+  <TransparentRoofProduction.description>Allows you to build transparent roofs for indoor greenhouses.</TransparentRoofProduction.description>
+</LanguageData>
