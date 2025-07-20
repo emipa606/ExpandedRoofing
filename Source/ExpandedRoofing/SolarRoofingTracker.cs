@@ -18,6 +18,13 @@ public class SolarRoofingTracker
 
     public SolarRoofingTracker(Map map)
     {
+        RefreshController(map);
+    }
+
+    private int NextId => nextId++;
+
+    public void RefreshController(Map map)
+    {
         if (fiRoofGridRoofGrid.GetValue(map.roofGrid) is RoofDef[] array)
         {
             for (var i = 0; i < array.Length; i++)
@@ -34,8 +41,6 @@ public class SolarRoofingTracker
             AddController(item);
         }
     }
-
-    private int NextId => nextId++;
 
     public void AddSolarCell(IntVec3 cell)
     {

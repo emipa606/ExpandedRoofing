@@ -69,4 +69,8 @@
     <defName>MarbleThickStoneRoof</defName>
     <label>marble thick stone roof</label>
   </RoofDef>
+  <RoofDef ParentName="ThickStoneRoofBase" MayRequire="Ludeon.RimWorld.Odyssey">
+    <defName>VacstoneThickStoneRoof</defName>
+    <label>vacstone thick stone roof</label>
+  </RoofDef>
 </Defs>

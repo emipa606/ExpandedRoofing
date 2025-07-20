@@ -45,9 +45,9 @@ public class CompPowerPlantSolarController : CompPowerPlant
 
     private float MaxOutput => netId.HasValue ? ExpandedRoofingMod.settings.solarController_maxOutput : 0f;
 
-    private int RoofCount => netId.HasValue ? solarRoofingTracker.GetCellSets(netId).RoofCount : 0;
+    private int RoofCount => netId.HasValue ? solarRoofingTracker.GetCellSets(NetId).RoofCount : 0;
 
-    private int ControllerCount => solarRoofingTracker.GetCellSets(netId).ControllerCount;
+    private int ControllerCount => netId.HasValue ? solarRoofingTracker.GetCellSets(NetId).ControllerCount : 0;
 
     protected override float DesiredPowerOutput
     {
@@ -94,9 +94,9 @@ public class CompPowerPlantSolarController : CompPowerPlant
     {
         base.PostDraw();
         var fillableBarRequest = default(FillableBarRequest);
-        var postition = parent.DrawPos + (Vector3.up * 0.1f);
-        postition.z += -0.895f;
-        fillableBarRequest.center = postition;
+        var position = parent.DrawPos + (Vector3.up * 0.1f);
+        position.z += -0.895f;
+        fillableBarRequest.center = position;
         fillableBarRequest.size = BarSize;
         if (MaxOutput == 0)
         {
@@ -114,5 +114,17 @@ public class CompPowerPlantSolarController : CompPowerPlant
         fillableBarRequest.margin = 0.05f;
         fillableBarRequest.rotation = parent.Rotation;
         DrawFillableBar(fillableBarRequest);
+    }
+
+    public override void CompTickInterval(int delta)
+    {
+        base.CompTickInterval(delta);
+        if (!parent.IsHashIntervalTick(GenTicks.TickLongInterval, delta))
+        {
+            return;
+        }
+
+        solarRoofingTracker ??= parent.Map.GetComponent<SolarRoofing_MapComponent>().tracker;
+        solarRoofingTracker?.RefreshController(parent.MapHeld);
     }
 }
