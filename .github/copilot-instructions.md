@@ -1,55 +1,59 @@
-# GitHub Copilot Instructions for RimWorld Expanded Roofing Mod
+# GitHub Copilot Instructions for Expanded Roofing (Continued)
 
 ## Mod Overview and Purpose
 
-The Expanded Roofing Mod aims to enrich the roofing system in RimWorld by introducing new types of roofs and maintaining systems. This mod allows players to build custom roofs with specific characteristics, such as solar and transparent roofs, adding more depth and strategy to base construction and resource management.
+The Expanded Roofing (Continued) mod enhances the roofing system in RimWorld by introducing customizable roof types, including transparent greenhouse roofs and photovoltaic solar roofs. Originally developed by Vendan and later updated and continued by multiple developers, this mod adds new strategic depth to building design, enabling players to manage light penetration and power generation more effectively.
 
 ## Key Features and Systems
 
-1. **Custom Roof Types**: Introduces various roof types like solar roofs, thick stone roofs, and transparent roofs, providing diverse options for players' structures.
+- **Transparent Roofs**: Designed to allow almost all light to pass through, ideal for greenhouses.
+- **Solar Roofs**: Generate power without occupying ground space. Each solar tile can produce up to 200w and is managed via controllers.
+- **Roof Maintenance**: Thick roofs require maintenance over time to prevent collapses, integrating a dynamic upkeep system.
+- **Research**: Unlock new roofing types and capabilities through four new technological advancements.
+- **Compatibility**: Seamlessly integrates with save games created in version B19 or later, with no additional roofing mods.
+- **Localization**: The mod supports multiple languages, including English, Turkish, Russian, French, Chinese, and Japanese.
 
-2. **Roof Maintenance**: Implements a maintenance system for roofs, ensuring they require periodic upkeep which adds an element of resource management and planning.
+### Solar Roofing and Controllers
 
-3. **Solar Power Integration**: Solar roofs not only act as a covering but also generate power, contributing to the colony's energy resources dynamically depending on weather and light conditions.
+- Controllers manage the power output of connected solar roofing tiles.
+- A controller's maximum output is capped at 2500w but can manage unlimited tile connections.
+  
+### Roof Maintenance
 
-4. **Construction and Designation Tools**: New designators for roofing enable intuitive construction and prioritizing of the different roof types.
-
-5. **Harmony Patches**: These are utilized extensively to seamlessly integrate the features without directly modifying the core game codes, ensuring maximum compatibility.
+- Thick roofs deteriorate over time (approximately every 167 days) and require maintenance.
+- After 250 days without maintenance, roofs risk collapse in a mean time between (MTB) event of 3.5 days.
 
 ## Coding Patterns and Conventions
 
-- **Static Classes for Tooling**: Many of the utility functions are encapsulated within static classes, following the pattern of static method collections to provide clear, accessible utility functions (e.g., `InjectedDefHasher`).
-
-- **Inheriting Core Classes**: Classes like `CompCustomRoof` inherit from base classes like `ThingComp`, showcasing an object-oriented approach that leverages inheritance to extend functionality with minimal redundancy.
-
-- **Internal Access Modifiers**: Many helper classes and methods are marked as internal to encapsulate functionality within the assembly and maintain clear boundaries.
-
-- **Method Overloading and Overrides**: Methods are carefully overloaded and sometimes overridden to ensure correct behavior tailored to different roof types (e.g., `Designator_BuildCustomRoof`).
+- **Namespace Structuring**: Maintain modular and clear code by categorizing classes according to functionality and features (e.g., `CompCustomRoof`, `CompPowerPlantSolarController`).
+- **Coding Style**: Use PascalCase for class names and method declarations; use camelCase for local variables and method parameters.
+- **File Organization**: Logical splitting of functionalities into multiple classes and files to promote maintainability (e.g., `RoofGrid_SetRoof.cs`, `GlowGrid_GroundGlowAt.cs`).
 
 ## XML Integration
 
-The mod involves XML definitions for new roof types, research projects, and designators. Typically, these XML files declare new items by defining their properties, enabling the game's engine to recognize and use them. Unfortunately, the specifics of the XML files were unavailable due to parsing issues, but integrating XML changes is a standard procedure for extending RimWorld’s def-based architecture.
+- Utilize XML for defining roof types and related data within the mod, employing `ThingDef`, `RoofDef`, and custom `CompProperties`.
+- Designators for new roofing types are specified and available in the game under the `Zone` tab.
 
 ## Harmony Patching
 
-Harmony is extensively used to avoid overwriting the base game code. The key elements include:
-
-- **HarmonyPatches.cs**: The core location where all the Harmony patches are applied to the game.
-  
-- **Prefixes, Transpilers, and Postfixes**: Often utilized to modify method behavior before, during, or after method execution without direct code alteration.
-
-- **Patch Classes**: Many classes like `RoofMaintenance_Patches` implement patches that adjust how roofing systems integrate with gameplay mechanics.
+- Embrace Harmony for non-destructive method patching, ensuring compatibility with other mods and vanilla updates.
+- **Common Harmony Classes**:
+  - `HarmonyPatches`: Implement patches in this class to alter or extend game behavior effectively.
+  - Specific examples include manipulation of construction blocking (`GenConstruct_BlocksConstruction`) and roof grid updates (`RoofGrid_SetRoof`).
 
 ## Suggestions for Copilot
 
-- **Helper Method Completion**: Given the repetitive nature of utility functions, Copilot can be used to propose method signatures based on existing patterns.
+To maximize efficiency and accuracy when using GitHub Copilot:
+- **Prompt Suggestions**: Start code comments or method stubs to receive more accurate autocompletions based on context.
+- **Harmony Examples**: Provide examples of patches and scenarios where Harmony can alter game logic or visuals.
+- **XML Data**: When creating or modifying XML defs, prompt Copilot with existing `Def` examples to explore similar pattern options.
+- **Localization Enhancements**: Provide key phrases or terms for use in translations and localizations, leveraging Copilot's abilities to suggest translated strings based on these inputs.
 
-- **Class and Method Suggestions**: Add suggestions for filling in logic within classes, leveraging standard RimWorld modding patterns for designing `Comps` and `Def Mod Extensions`.
+## Note
 
-- **Harmony Transpiler/Formulation**: Provide recommendations for gear transpiler methods using IL code, ensuring correctness and preventing game-breaking bugs.
+Whenever you encounter issues:
+- Test with only this mod enabled alongside its requirements.
+- Use the provided Log Uploader for error reports.
+- Direct issues to the Discord channel for quicker support; GitHub is preferred for solutions and contributions.
 
-- **XML Template Completion**: While not detailed here, once XML files are clear, Copilot can assist in generating def templates for new roofs, enabling faster XML modification and experimentation.
-
-- **Safeguard Incorporation**: Automatically suggest safeguards in methods, preventing null references and common runtime exceptions found in modding environments.
-
-By following these guidelines and utilizing GitHub Copilot, developers can streamline mod development, ensuring consistency and reliability in mod features.
+With these instructions, contributors should be well-equipped to develop and expand upon the Expanded Roofing mod for RimWorld.

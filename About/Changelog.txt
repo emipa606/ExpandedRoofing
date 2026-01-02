@@ -1,5 +1,8 @@
 # Changelog for ExpandedRoofing
 
+1.6.2 - Added support for any mod that uses the Sanguophage utility to check if the pawn is in sunlight
+
+
 1.6.1 - Fix for Vacstone and removes the need to reload after building
 
 

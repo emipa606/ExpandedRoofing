@@ -1,6 +1,6 @@
 # [Expanded Roofing (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=2026595894)
 
-![Image](https://i.imgur.com/WAEzk68.png)
+![Image](https://img.litet.net/WAEzk68.png)
 
 Update of Why_is_thats mod https://steamcommunity.com/sharedfiles/filedetails/?id=1512478761 
 Uploaded to Steam by CrunchyDuck from the GitHub-repository https://github.com/AaronCRobinson/ExpandedRoofing
@@ -10,9 +10,9 @@ Then NigrumMortis to 1.4: https://steamcommunity.com/sharedfiles/filedetails/?id
 
 - Added a power-bar to the solar roof controller to visualize current power as well as show if there are need for more controllers.
 
-![Image](https://i.imgur.com/pufA0kM.png)
+![Image](https://img.litet.net/logos/Notice.png)
 	
-![Image](https://i.imgur.com/Z4GOv8H.png)
+![Image](https://img.litet.net/logos/OriginalDescription.png)
 
 Adds customizable roofing, with transparent greenhouse roofing and photovoltaic solar roofing. Reworked from Vendan's original idea.
 A direct port of the [Github version made by **AaronCRobinson.**](https://github.com/AaronCRobinson/ExpandedRoofing) I take no credit for anything made in this mod.
@@ -70,13 +70,13 @@ Special thanks to Pardeike's amazing non-destructive patching library, Harmony.
 
 [![Image](https://raw.githubusercontent.com/pardeike/Harmony/master/HarmonyLogo.png)](https://github.com/pardeike/Harmony)
 
-![Image](https://i.imgur.com/PwoNOj4.png)
+![Image](https://img.litet.net/logos/ReportingIssues.png)
 
 
 
 -  See if the the error persists if you just have this mod and its requirements active.
 -  If not, try adding your other mods until it happens again.
--  Post your error-log using the [Log Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) or the standalone [Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404) and command Ctrl+F12
+-  Always post your log using the [Log Uploader](https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404)
 -  For best support, please use the Discord-channel for error-reporting.
 -  Do not report errors by making a discussion-thread, I get no notification of that.
 -  If you have the solution for a problem, please post it to the GitHub repository.

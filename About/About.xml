@@ -24,7 +24,7 @@
   <loadAfter>
     <li>brrainz.harmony</li>
   </loadAfter>
-  <description>[img]https://i.imgur.com/WAEzk68.png[/img]
+  <description>[img]https://img.litet.net/WAEzk68.png[/img]
 Update of Why_is_thats mod https://steamcommunity.com/sharedfiles/filedetails/?id=1512478761 
 Uploaded to Steam by CrunchyDuck from the GitHub-repository https://github.com/AaronCRobinson/ExpandedRoofing
 Later updated to 1.1 and 1.2 by me
@@ -33,18 +33,18 @@ Then NigrumMortis to 1.4: https://steamcommunity.com/sharedfiles/filedetails/?id
 
 - Added a power-bar to the solar roof controller to visualize current power as well as show if there are need for more controllers.
 
-[img]https://i.imgur.com/pufA0kM.png[/img]
+[img]https://img.litet.net/logos/Notice.png[/img]
 
 [table]
-    [tr][td][url=https://discord.gg/h5TY6DA][img]https://i.imgur.com/zdzzBrc.png[/img][/url][/td] [td][url=https://github.com/emipa606/ExpandedRoofing][img]https://i.imgur.com/kTkpTOE.png[/img][/url][/td]
+    [tr][td][url=https://discord.gg/h5TY6DA][img]https://img.litet.net/logos/Discord.png[/img][/url][/td] [td][url=https://github.com/emipa606/ExpandedRoofing][img]https://img.litet.net/logos/Github.png[/img][/url][/td]
     [/tr]
     [tr]
-        [td][img]https://i.imgur.com/WjDSfUn.png[/img][/td]
-        [td][img]https://i.imgur.com/6KqTKks.png[/img][/td]
+        [td][img]https://img.litet.net/logos/SafeToAdd.png[/img][/td]
+        [td][img]https://img.litet.net/logos/UnsafeToRemove.png[/img][/td]
     [/tr]
 [/table]
 	
-[img]https://i.imgur.com/Z4GOv8H.png[/img]
+[img]https://img.litet.net/logos/OriginalDescription.png[/img]
 Adds customizable roofing, with transparent greenhouse roofing and photovoltaic solar roofing. Reworked from Vendan's original idea.
 A direct port of the [url=https://github.com/AaronCRobinson/ExpandedRoofing]Github version made by [b]AaronCRobinson.[/b][/url] I take no credit for anything made in this mod.
 [b]Works on 0.19.0 as well as 1.0.0.[/b]
@@ -94,11 +94,11 @@ Special thanks to Pardeike's amazing non-destructive patching library, Harmony.
 
 [url=https://github.com/pardeike/Harmony][img]https://raw.githubusercontent.com/pardeike/Harmony/master/HarmonyLogo.png[/img][/url]
 
-[img]https://i.imgur.com/PwoNOj4.png[/img]
+[img]https://img.litet.net/logos/ReportingIssues.png[/img]
 [list]
 [*] See if the the error persists if you just have this mod and its requirements active.
 [*] If not, try adding your other mods until it happens again.
-[*] Post your error-log using the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404]Log Uploader[/url] or the standalone [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404]Uploader[/url] and command Ctrl+F12
+[*] Always post your log using the [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2873415404]Log Uploader[/url]
 [*] For best support, please use the Discord-channel for error-reporting.
 [*] Do not report errors by making a discussion-thread, I get no notification of that.
 [*] If you have the solution for a problem, please post it to the GitHub repository.
@@ -106,5 +106,5 @@ Special thanks to Pardeike's amazing non-destructive patching library, Harmony.
 [/list] 
 
 [url=https://steamcommunity.com/sharedfiles/filedetails/changelog/2026595894][img]https://img.shields.io/github/v/release/emipa606/ExpandedRoofing?label=latest%20version&amp;style=plastic&amp;color=9f1111&amp;labelColor=black[/img][/url] | tags:  solar power,  transparent</description>
-  <modVersion IgnoreIfNoMatchingField="True">1.6.1</modVersion>
+  <modVersion IgnoreIfNoMatchingField="True">1.6.2</modVersion>
 </ModMetaData>
