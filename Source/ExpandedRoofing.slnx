@@ -6,4 +6,19 @@
     <BuildType Name="Release" />
   </Configurations>
   <Project Path="ExpandedRoofing/ExpandedRoofing.csproj" />
+  <Folder Name="/XML/About/">
+    <File Path="../About/about.xml" />
+  </Folder>
+  <Folder Name="/XML/1.6/Defs/">
+    <File Path="../1.6/Defs/Building_SolarController.xml" />
+    <File Path="../1.6/Defs/Jobs_Work.xml" />
+    <File Path="../1.6/Defs/ResearchProjectDefs.xml" />
+    <File Path="../1.6/Defs/ResearchTab.xml" />
+    <File Path="../1.6/Defs/Roofs.xml" />
+    <File Path="../1.6/Defs/RoofThings.xml" />
+    <File Path="../1.6/Defs/WorkGivers.xml" />
+  </Folder>
+  <Folder Name="/XML/1.6/Patches/">
+    <File Path="../1.6/Patches/Patches.xml" />
+  </Folder>
 </Solution>

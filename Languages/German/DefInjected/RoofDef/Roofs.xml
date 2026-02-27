@@ -31,4 +31,7 @@
   <SlateThickStoneRoof.label>Schiefer dicken Stein Dach</SlateThickStoneRoof.label>
   <SlateThickStoneRoof.description>Dicke Steinbedachung. Hält Drop Pods und Mörsergeschosse ab.</SlateThickStoneRoof.description>
   <!-- EN: thick stone roof -->
+  <!-- EN: vacstone thick stone roof -->
+  <VacstoneThickStoneRoof.label>vacstone dicken Stein Dach</VacstoneThickStoneRoof.label>
+  <VacstoneThickStoneRoof.description>Dicke Steinbedachung. Hält Drop Pods und Mörsergeschosse ab.</VacstoneThickStoneRoof.description>
 </LanguageData>

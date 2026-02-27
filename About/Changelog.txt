@@ -1,5 +1,8 @@
 # Changelog for ExpandedRoofing
 
+1.6.3 - Maintenance of large roofs should be less laggy
+
+
 1.6.2 - Added support for any mod that uses the Sanguophage utility to check if the pawn is in sunlight
 
 

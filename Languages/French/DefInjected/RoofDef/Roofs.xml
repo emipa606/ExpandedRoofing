@@ -33,4 +33,7 @@
   <!-- EN: thick stone roof -->
   <ThickStoneRoof.label>toit de pierre épais</ThickStoneRoof.label>
   <ThickStoneRoof.description>Toiture en pierre épaisse. Permet d'éviter les nacelles et les tirs de mortier.</ThickStoneRoof.description>
+  <!-- EN: vacstone thick stone roof -->
+  <VacstoneThickStoneRoof.label>toit en pierre épais vacstone</VacstoneThickStoneRoof.label>
+  <VacstoneThickStoneRoof.description>Toiture en pierre épaisse. Permet d'éviter les nacelles et les tirs de mortier.</VacstoneThickStoneRoof.description>
 </LanguageData>

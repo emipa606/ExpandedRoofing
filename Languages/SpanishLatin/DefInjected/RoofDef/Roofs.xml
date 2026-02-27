@@ -31,4 +31,7 @@
   <!-- EN: slate thick stone roof -->
   <SlateThickStoneRoof.description>厚厚的石头屋顶。有助于阻挡投弹舱和迫击炮弹。</SlateThickStoneRoof.description>
   <!-- EN: thick stone roof -->
+  <!-- EN: vacstone thick stone roof -->
+  <VacstoneThickStoneRoof.label>vacstone 厚石屋顶</VacstoneThickStoneRoof.label>
+  <VacstoneThickStoneRoof.description>厚厚的石头屋顶。有助于阻挡投弹舱和迫击炮弹。</VacstoneThickStoneRoof.description>
 </LanguageData>

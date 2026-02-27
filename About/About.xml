@@ -105,6 +105,6 @@ Special thanks to Pardeike's amazing non-destructive patching library, Harmony.
 [*] Use [url=https://github.com/RimSort/RimSort/releases/latest]RimSort[/url] to sort your mods
 [/list] 
 
-[url=https://steamcommunity.com/sharedfiles/filedetails/changelog/2026595894][img]https://img.shields.io/github/v/release/emipa606/ExpandedRoofing?label=latest%20version&amp;style=plastic&amp;color=9f1111&amp;labelColor=black[/img][/url] | tags:  solar power,  transparent</description>
-  <modVersion IgnoreIfNoMatchingField="True">1.6.2</modVersion>
+[url=https://steamcommunity.com/sharedfiles/filedetails/changelog/2026595894][img]https://img.shields.io/github/v/release/emipa606/ExpandedRoofing?label=latest%20version&amp;style=plastic&amp;color=9f1111&amp;labelColor=black[/img][/url] | tags: transparent, solar power</description>
+  <modVersion IgnoreIfNoMatchingField="True">1.6.3</modVersion>
 </ModMetaData>

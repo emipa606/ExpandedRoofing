@@ -36,4 +36,8 @@
   <ThickStoneRoof.label>thick stone roof</ThickStoneRoof.label>
   <!-- EN: Thick stone roofing. Helps keep out the drop pods and mortar rounds. -->
   <ThickStoneRoof.description>Thick stone roofing. Helps keep out the drop pods and mortar rounds.</ThickStoneRoof.description>
+  <!-- EN: vacstone thick stone roof -->
+  <VacstoneThickStoneRoof.label>vacstone thick stone roof</VacstoneThickStoneRoof.label>
+  <!-- EN: Thick stone roofing. Helps keep out the drop pods and mortar rounds. -->
+  <VacstoneThickStoneRoof.description>Thick stone roofing. Helps keep out the drop pods and mortar rounds.</VacstoneThickStoneRoof.description>
 </LanguageData>

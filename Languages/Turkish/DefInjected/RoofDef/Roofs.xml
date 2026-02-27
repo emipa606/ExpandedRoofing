@@ -31,4 +31,7 @@
   <!-- EN: thick stone roof -->
   <ThickStoneRoof.label>kalın taş çatı</ThickStoneRoof.label>
   <ThickStoneRoof.description>Kalın taş çatı kaplaması. Drop podları ve havan mermilerini dışarıda tutmaya yardımcı olur.</ThickStoneRoof.description>
+  <!-- EN: vacstone thick stone roof -->
+  <VacstoneThickStoneRoof.label>vacstone kalınlığında taş çatı</VacstoneThickStoneRoof.label>
+  <VacstoneThickStoneRoof.description>Kalın taş çatı kaplaması. Drop podları ve havan mermilerini dışarıda tutmaya yardımcı olur.</VacstoneThickStoneRoof.description>
 </LanguageData>

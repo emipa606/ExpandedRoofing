@@ -84,4 +84,4 @@ Special thanks to Pardeike's amazing non-destructive patching library, Harmony.
 
  
 
-[![Image](https://img.shields.io/github/v/release/emipa606/ExpandedRoofing?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2026595894) | tags:  solar power,  transparent
+[![Image](https://img.shields.io/github/v/release/emipa606/ExpandedRoofing?label=latest%20version&style=plastic&color=9f1111&labelColor=black)](https://steamcommunity.com/sharedfiles/filedetails/changelog/2026595894) | tags: transparent, solar power

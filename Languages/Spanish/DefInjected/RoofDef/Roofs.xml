@@ -31,4 +31,7 @@
   <!-- EN: slate thick stone roof -->
   <SlateThickStoneRoof.description>Techos de piedra gruesa. Ayuda a mantener alejadas las cápsulas de lanzamiento y las balas de mortero.</SlateThickStoneRoof.description>
   <!-- EN: thick stone roof -->
+  <!-- EN: vacstone thick stone roof -->
+  <VacstoneThickStoneRoof.label>tejado de piedra de espesor vacstone</VacstoneThickStoneRoof.label>
+  <VacstoneThickStoneRoof.description>Techos de piedra gruesa. Ayuda a mantener alejadas las cápsulas de lanzamiento y las balas de mortero.</VacstoneThickStoneRoof.description>
 </LanguageData>

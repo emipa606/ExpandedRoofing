@@ -32,4 +32,7 @@
   <!-- EN: sandstone thick stone roof -->
   <!-- EN: slate thick stone roof -->
   <!-- EN: thick stone roof -->
+  <!-- EN: vacstone thick stone roof -->
+  <VacstoneThickStoneRoof.label>厚い石屋根</VacstoneThickStoneRoof.label>
+  <VacstoneThickStoneRoof.description>厚い石の屋根。ドロップポッドや迫撃砲の弾を防ぐのに役立つ。</VacstoneThickStoneRoof.description>
 </LanguageData>

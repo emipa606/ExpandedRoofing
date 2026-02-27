@@ -88,9 +88,16 @@ internal sealed class RoofMaintenanceGrid(Map map) : IExposable
 
     public void Tick()
     {
-        foreach (var item in grid
-                     .Where(kp => Find.TickManager.TicksGame + (kp.Key.HashOffset() % long_TickInterval) == 0).ToList())
+        int bucketIndex = Find.TickManager.TicksGame % long_TickInterval;
+
+        foreach (var item in grid.ToList())
         {
+            int tileBucket = item.Key.HashOffset() % long_TickInterval;
+            if (tileBucket != bucketIndex)
+            {
+                continue;
+            }
+
             grid[item.Key]++;
             if (grid[item.Key] > minTicksBeforeMTBCollapses && Rand.MTBEventOccurs(3.5f, 60000f, long_TickInterval))
             {

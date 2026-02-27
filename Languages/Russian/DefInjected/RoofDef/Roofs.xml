@@ -31,4 +31,7 @@
   <SlateThickStoneRoof.label>шифер толстая каменная крыша</SlateThickStoneRoof.label>
   <SlateThickStoneRoof.description>Толстая каменная кровля. Помогает защититься от дроп-капсул и минометных снарядов.</SlateThickStoneRoof.description>
   <!-- EN: thick stone roof -->
+  <!-- EN: vacstone thick stone roof -->
+  <VacstoneThickStoneRoof.label>Каменная крыша толщиной в вакстоун</VacstoneThickStoneRoof.label>
+  <VacstoneThickStoneRoof.description>Толстая каменная кровля. Помогает защититься от дроп-капсул и минометных снарядов.</VacstoneThickStoneRoof.description>
 </LanguageData>
