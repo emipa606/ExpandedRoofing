@@ -147,6 +147,8 @@ public class SolarRoofingTracker
 
     public void AddController(Thing controller)
     {
+        RemoveController(controller);
+
         var hashSet = new HashSet<IntVec3>();
         for (var i = -1; i < controller.RotatedSize.x + 1; i++)
         {
@@ -173,16 +175,27 @@ public class SolarRoofingTracker
 
     public void RemoveController(Thing controller)
     {
-        var foundNetId = controller.TryGetComp<CompPowerPlantSolarController>().NetId;
-        if (cellSets.TryGetValue(foundNetId, out var set))
+        isolatedControllers.Remove(controller);
+        foreach (var set in cellSets.Values)
         {
             set.controllers.Remove(controller);
+        }
+
+        var comp = controller.TryGetComp<CompPowerPlantSolarController>();
+        if (comp != null)
+        {
+            AccessTools.Field(typeof(CompPowerPlantSolarController), "netId").SetValue(comp, null);
         }
     }
 
     public SolarGridSet GetCellSets(int? netId)
     {
-        return !netId.HasValue ? null : cellSets[netId.Value];
+        if (!netId.HasValue)
+        {
+            return null;
+        }
+
+        return cellSets.TryGetValue(netId.Value, out var set) ? set : null;
     }
 
     public class SolarGridSet

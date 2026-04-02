@@ -27,6 +27,19 @@ public class CompPowerPlantSolarController : CompPowerPlant
 
     private SolarRoofingTracker solarRoofingTracker;
 
+    private SolarRoofingTracker.SolarGridSet CurrentGridSet
+    {
+        get
+        {
+            if (solarRoofingTracker == null || !netId.HasValue)
+            {
+                return null;
+            }
+
+            return solarRoofingTracker.GetCellSets(netId);
+        }
+    }
+
     public int NetId
     {
         get
@@ -45,15 +58,15 @@ public class CompPowerPlantSolarController : CompPowerPlant
 
     private float MaxOutput => netId.HasValue ? ExpandedRoofingMod.settings.solarController_maxOutput : 0f;
 
-    private int RoofCount => netId.HasValue ? solarRoofingTracker.GetCellSets(NetId).RoofCount : 0;
+    private int RoofCount => CurrentGridSet?.RoofCount ?? 0;
 
-    private int ControllerCount => netId.HasValue ? solarRoofingTracker.GetCellSets(NetId).ControllerCount : 0;
+    private int ControllerCount => CurrentGridSet?.ControllerCount ?? 0;
 
     protected override float DesiredPowerOutput
     {
         get
         {
-            if (!netId.HasValue)
+            if (CurrentGridSet == null || ControllerCount <= 0)
             {
                 return 0f;
             }
@@ -70,6 +83,7 @@ public class CompPowerPlantSolarController : CompPowerPlant
     {
         base.PostSpawnSetup(respawningAfterLoad);
         solarRoofingTracker = parent.Map.GetComponent<SolarRoofing_MapComponent>().tracker;
+        netId = null;
         solarRoofingTracker.AddController(parent);
     }
 
@@ -88,6 +102,7 @@ public class CompPowerPlantSolarController : CompPowerPlant
     {
         base.PostDeSpawn(map, mode);
         map.GetComponent<SolarRoofing_MapComponent>().tracker.RemoveController(parent);
+        netId = null;
     }
 
     public override void PostDraw()
