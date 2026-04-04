@@ -54,7 +54,7 @@ public class CompPowerPlantSolarController : CompPowerPlant
         set => netId = value;
     }
 
-    private float WattagePerSolarPanel => ExpandedRoofingMod.settings.solarController_wattagePerSolarPanel;
+    private static float WattagePerSolarPanel => ExpandedRoofingMod.settings.solarController_wattagePerSolarPanel;
 
     private float MaxOutput => netId.HasValue ? ExpandedRoofingMod.settings.solarController_maxOutput : 0f;
 

@@ -21,7 +21,7 @@ public class SolarRoofingTracker
         RefreshController(map);
     }
 
-    private int NextId => nextId++;
+    private static int NextId => nextId++;
 
     public void RefreshController(Map map)
     {
@@ -190,12 +190,7 @@ public class SolarRoofingTracker
 
     public SolarGridSet GetCellSets(int? netId)
     {
-        if (!netId.HasValue)
-        {
-            return null;
-        }
-
-        return cellSets.TryGetValue(netId.Value, out var set) ? set : null;
+        return !netId.HasValue ? null : cellSets.GetValueOrDefault(netId.Value);
     }
 
     public class SolarGridSet

@@ -1,5 +1,8 @@
 # Changelog for ExpandedRoofing
 
+1.6.4 - Solar controller fix for gravship relocation, thanks to SIGSEGV111
+
+
 1.6.3 - Maintenance of large roofs should be less laggy
 
 

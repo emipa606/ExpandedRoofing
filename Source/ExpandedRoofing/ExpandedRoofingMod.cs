@@ -66,22 +66,22 @@ internal class ExpandedRoofingMod : Mod
             wattagePerSolarPanel = settings.solarController_wattagePerSolarPanel.ToString("0.00");
         }
 
-        var listing_Standard = new Listing_Standard();
-        listing_Standard.Begin(inRect);
-        listing_Standard.TextFieldNumericLabeled("ER_MaxOutputLabel".Translate(),
+        var listingStandard = new Listing_Standard();
+        listingStandard.Begin(inRect);
+        listingStandard.TextFieldNumericLabeled("ER_MaxOutputLabel".Translate(),
             ref settings.solarController_maxOutput, ref maxOutputBuffer);
-        listing_Standard.TextFieldNumericLabeled("ER_WattagePerSolarPanelLabel".Translate(),
+        listingStandard.TextFieldNumericLabeled("ER_WattagePerSolarPanelLabel".Translate(),
             ref settings.solarController_wattagePerSolarPanel, ref wattagePerSolarPanel);
-        listing_Standard.CheckboxLabeled("ER_GlassLights".Translate(), ref settings.glassLights);
-        listing_Standard.CheckboxLabeled("ER_RoofMaintenance".Translate(), ref settings.roofMaintenance);
+        listingStandard.CheckboxLabeled("ER_GlassLights".Translate(), ref settings.glassLights);
+        listingStandard.CheckboxLabeled("ER_RoofMaintenance".Translate(), ref settings.roofMaintenance);
         if (currentVersion != null)
         {
-            listing_Standard.Gap();
+            listingStandard.Gap();
             GUI.contentColor = Color.gray;
-            listing_Standard.Label("ER_CurrentModVersion".Translate(currentVersion));
+            listingStandard.Label("ER_CurrentModVersion".Translate(currentVersion));
             GUI.contentColor = Color.white;
         }
 
-        listing_Standard.End();
+        listingStandard.End();
     }
 }

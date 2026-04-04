@@ -88,11 +88,11 @@ internal sealed class RoofMaintenanceGrid(Map map) : IExposable
 
     public void Tick()
     {
-        int bucketIndex = Find.TickManager.TicksGame % long_TickInterval;
+        var bucketIndex = Find.TickManager.TicksGame % long_TickInterval;
 
         foreach (var item in grid.ToList())
         {
-            int tileBucket = item.Key.HashOffset() % long_TickInterval;
+            var tileBucket = item.Key.HashOffset() % long_TickInterval;
             if (tileBucket != bucketIndex)
             {
                 continue;

@@ -51,10 +51,7 @@ internal class DynamicDefs
         InjectedDefHasher.GiveShortHasToDef(thingDef2, typeof(ThingDef));
         if (thingDef.MadeFromStuff)
         {
-            if (thingDef2 != null)
-            {
-                thingDef2.stuffCategories = thingDef.stuffCategories;
-            }
+            thingDef2?.stuffCategories = thingDef.stuffCategories;
         }
 
         DefDatabase<ThingDef>.Add(thingDef2);
