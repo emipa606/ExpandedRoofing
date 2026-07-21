@@ -10,6 +10,8 @@ public class SolarRoofingTracker
 {
     private static readonly FieldInfo fiRoofGridRoofGrid = AccessTools.Field(typeof(RoofGrid), "roofGrid");
 
+    private static readonly FieldInfo fiNetId = AccessTools.Field(typeof(CompPowerPlantSolarController), "netId");
+
     private static int nextId;
 
     private readonly Dictionary<int, SolarGridSet> cellSets = new();
@@ -40,6 +42,29 @@ public class SolarRoofingTracker
         {
             AddController(item);
         }
+    }
+
+    // Deferred full rebuild: called from the MapComponent's FinalizeInit (after map load / generation /
+    // gravship landing) when the roof grid and buildings are fully present. The constructor scan runs
+    // during Map.ConstructComponents before RoofGrid data exists, so it finds nothing on load.
+    public void Rebuild(Map map)
+    {
+        foreach (var set in cellSets.Values)
+        {
+            foreach (var controller in set.controllers)
+            {
+                NullNetId(controller);
+            }
+        }
+
+        foreach (var controller in isolatedControllers)
+        {
+            NullNetId(controller);
+        }
+
+        cellSets.Clear();
+        isolatedControllers.Clear();
+        RefreshController(map);
     }
 
     public void AddSolarCell(IntVec3 cell)
@@ -75,19 +100,20 @@ public class SolarRoofingTracker
                 break;
             default:
             {
-                var num2 = hashSet.ElementAt(num);
+                var num2 = hashSet.ElementAt(0);
                 cellSets[num2].set.Add(cell);
                 for (var j = 1; j < hashSet.Count; j++)
                 {
                     foreach (var controller in cellSets[hashSet.ElementAt(j)].controllers)
                     {
-                        controller.TryGetComp<CompPowerPlantSolarController>().NetId = num2;
+                        SetNetId(controller, num2);
                     }
 
                     cellSets[num2].UnionWith(cellSets[hashSet.ElementAt(j)]);
                     cellSets.Remove(hashSet.ElementAt(j));
                 }
 
+                num = num2;
                 break;
             }
         }
@@ -117,7 +143,7 @@ public class SolarRoofingTracker
 
                     cellSets[num].controllers.Add(isolatedController);
                     list.Add(isolatedController);
-                    isolatedController.TryGetComp<CompPowerPlantSolarController>().NetId = num;
+                    SetNetId(isolatedController, num);
                     foundNetId = true;
                 }
             }
@@ -131,46 +157,136 @@ public class SolarRoofingTracker
 
     public void RemoveSolarCell(IntVec3 cell)
     {
-        foreach (var value in cellSets.Values)
+        int? foundKey = null;
+        foreach (var pair in cellSets)
         {
-            if (!value.set.Contains(cell))
+            if (!pair.Value.set.Contains(cell))
             {
                 continue;
             }
 
-            value.set.Remove(cell);
+            foundKey = pair.Key;
+            break;
+        }
+
+        if (!foundKey.HasValue)
+        {
+            Log.Warning($"ExpandedRoofing: SolarRoofingTracker.Remove on a bad cell ({cell}).");
             return;
         }
 
-        Log.Error($"ExpandedRoofing: SolarRoofingTracker.Remove on a bad cell ({cell}).");
+        var key = foundKey.Value;
+        var set = cellSets[key];
+        set.set.Remove(cell);
+
+        // (a) set is now empty: drop it and orphan its controllers.
+        if (set.set.Count == 0)
+        {
+            foreach (var controller in set.controllers)
+            {
+                NullNetId(controller);
+                isolatedControllers.Add(controller);
+            }
+
+            cellSets.Remove(key);
+            return;
+        }
+
+        // (b) the removed cell may have split the set into disconnected components.
+        var components = ConnectedComponents(set.set);
+        if (components.Count <= 1)
+        {
+            return;
+        }
+
+        // Keep the largest component under the existing id; spin up new ids for the rest.
+        components.Sort((a, b) => b.Count - a.Count);
+        var controllers = set.controllers.ToList();
+
+        var componentSets = new List<KeyValuePair<int, SolarGridSet>>();
+        set.set.Clear();
+        foreach (var c in components[0])
+        {
+            set.set.Add(c);
+        }
+
+        set.controllers.Clear();
+        componentSets.Add(new KeyValuePair<int, SolarGridSet>(key, set));
+
+        for (var ci = 1; ci < components.Count; ci++)
+        {
+            var gridSet = new SolarGridSet(components[ci].First());
+            foreach (var c in components[ci])
+            {
+                gridSet.set.Add(c);
+            }
+
+            var newId = NextId;
+            cellSets.Add(newId, gridSet);
+            componentSets.Add(new KeyValuePair<int, SolarGridSet>(newId, gridSet));
+        }
+
+        foreach (var controller in controllers)
+        {
+            var footprint = FootprintCells(controller);
+            var attached = false;
+            foreach (var componentSet in componentSets)
+            {
+                if (!footprint.Any(iv3 => componentSet.Value.set.Contains(iv3)))
+                {
+                    continue;
+                }
+
+                componentSet.Value.controllers.Add(controller);
+                SetNetId(controller, componentSet.Key);
+                attached = true;
+                break;
+            }
+
+            if (!attached)
+            {
+                NullNetId(controller);
+                isolatedControllers.Add(controller);
+            }
+        }
     }
 
     public void AddController(Thing controller)
     {
         RemoveController(controller);
 
-        var hashSet = new HashSet<IntVec3>();
-        for (var i = -1; i < controller.RotatedSize.x + 1; i++)
+        var footprint = FootprintCells(controller);
+
+        var matching = new List<int>();
+        foreach (var pair in cellSets)
         {
-            for (var j = -1; j < controller.RotatedSize.z + 1; j++)
+            if (footprint.Any(iv3 => pair.Value.set.Contains(iv3)))
             {
-                hashSet.Add(controller.Position + new IntVec3(i, 0, j));
+                matching.Add(pair.Key);
             }
         }
 
-        foreach (var pair in cellSets)
+        if (matching.Count == 0)
         {
-            if (!hashSet.Any(iv3 => pair.Value.set.Contains(iv3)))
-            {
-                continue;
-            }
-
-            pair.Value.controllers.Add(controller);
-            controller.TryGetComp<CompPowerPlantSolarController>().NetId = pair.Key;
+            isolatedControllers.Add(controller);
             return;
         }
 
-        isolatedControllers.Add(controller);
+        var survivor = matching[0];
+        for (var m = 1; m < matching.Count; m++)
+        {
+            var other = matching[m];
+            foreach (var otherController in cellSets[other].controllers)
+            {
+                SetNetId(otherController, survivor);
+            }
+
+            cellSets[survivor].UnionWith(cellSets[other]);
+            cellSets.Remove(other);
+        }
+
+        cellSets[survivor].controllers.Add(controller);
+        SetNetId(controller, survivor);
     }
 
     public void RemoveController(Thing controller)
@@ -181,16 +297,77 @@ public class SolarRoofingTracker
             set.controllers.Remove(controller);
         }
 
-        var comp = controller.TryGetComp<CompPowerPlantSolarController>();
-        if (comp != null)
-        {
-            AccessTools.Field(typeof(CompPowerPlantSolarController), "netId").SetValue(comp, null);
-        }
+        NullNetId(controller);
     }
 
     public SolarGridSet GetCellSets(int? netId)
     {
         return !netId.HasValue ? null : cellSets.GetValueOrDefault(netId.Value);
+    }
+
+    private static HashSet<IntVec3> FootprintCells(Thing controller)
+    {
+        var footprint = new HashSet<IntVec3>();
+        for (var i = -1; i < controller.RotatedSize.x + 1; i++)
+        {
+            for (var j = -1; j < controller.RotatedSize.z + 1; j++)
+            {
+                footprint.Add(controller.Position + new IntVec3(i, 0, j));
+            }
+        }
+
+        return footprint;
+    }
+
+    private static List<HashSet<IntVec3>> ConnectedComponents(HashSet<IntVec3> cells)
+    {
+        var remaining = new HashSet<IntVec3>(cells);
+        var components = new List<HashSet<IntVec3>>();
+        var queue = new Queue<IntVec3>();
+        while (remaining.Count > 0)
+        {
+            var start = remaining.First();
+            remaining.Remove(start);
+            var component = new HashSet<IntVec3> { start };
+            queue.Enqueue(start);
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                for (var i = 0; i < 4; i++)
+                {
+                    var neighbor = current + GenAdj.CardinalDirections[i];
+                    if (!remaining.Remove(neighbor))
+                    {
+                        continue;
+                    }
+
+                    component.Add(neighbor);
+                    queue.Enqueue(neighbor);
+                }
+            }
+
+            components.Add(component);
+        }
+
+        return components;
+    }
+
+    private static void SetNetId(Thing controller, int id)
+    {
+        var comp = controller.TryGetComp<CompPowerPlantSolarController>();
+        if (comp != null)
+        {
+            comp.NetId = id;
+        }
+    }
+
+    private static void NullNetId(Thing controller)
+    {
+        var comp = controller.TryGetComp<CompPowerPlantSolarController>();
+        if (comp != null)
+        {
+            fiNetId.SetValue(comp, null);
+        }
     }
 
     public class SolarGridSet

@@ -119,7 +119,7 @@ public class CompPowerPlantSolarController : CompPowerPlant
         }
         else
         {
-            fillableBarRequest.fillPercent = DesiredPowerOutput / MaxOutput;
+            fillableBarRequest.fillPercent = powerOut / MaxOutput;
         }
 
         fillableBarRequest.filledMat =
@@ -129,17 +129,5 @@ public class CompPowerPlantSolarController : CompPowerPlant
         fillableBarRequest.margin = 0.05f;
         fillableBarRequest.rotation = parent.Rotation;
         DrawFillableBar(fillableBarRequest);
-    }
-
-    public override void CompTickInterval(int delta)
-    {
-        base.CompTickInterval(delta);
-        if (!parent.IsHashIntervalTick(GenTicks.TickLongInterval, delta))
-        {
-            return;
-        }
-
-        solarRoofingTracker ??= parent.Map.GetComponent<SolarRoofing_MapComponent>().tracker;
-        solarRoofingTracker?.RefreshController(parent.MapHeld);
     }
 }

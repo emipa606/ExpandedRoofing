@@ -6,10 +6,17 @@ namespace ExpandedRoofing.HarmonyPatches;
 [HarmonyPatch(typeof(RoofGrid), nameof(RoofGrid.SetRoof))]
 public static class RoofGrid_SetRoof
 {
-    public static void RoofLeavings(RoofGrid __instance, IntVec3 c, RoofDef def, Map ___map)
+    // Runs as a PREFIX: RoofGrid.SetRoof writes the internal roof array before any postfix would run,
+    // so we must read the OLD roof here (pre-write) to drop leavings and unregister solar cells.
+    public static void Prefix(RoofGrid __instance, IntVec3 c, RoofDef def, Map ___map)
     {
         var roofDef = __instance.RoofAt(c);
-        if (roofDef != null && def != roofDef)
+        if (roofDef == def)
+        {
+            return;
+        }
+
+        if (roofDef != null)
         {
             var modExtension = roofDef.GetModExtension<RoofExtension>();
             if (modExtension != null)
