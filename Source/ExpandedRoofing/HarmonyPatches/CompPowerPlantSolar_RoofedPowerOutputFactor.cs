@@ -1,46 +1,39 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
 using HarmonyLib;
 using RimWorld;
+using Verse;
 
 namespace ExpandedRoofing.HarmonyPatches;
 
 [HarmonyPatch(typeof(CompPowerPlantSolar), "RoofedPowerOutputFactor", MethodType.Getter)]
 public static class CompPowerPlantSolar_RoofedPowerOutputFactor
 {
-    public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+    // Recompute the factor from scratch: transparent roof counts as unroofed for vanilla solar panels.
+    public static void Postfix(CompPowerPlantSolar __instance, ref float __result)
     {
-        var miFixRoofedPowerOutputFactor = AccessTools.Method(typeof(TranspilerHelper),
-            nameof(TranspilerHelper.FixRoofedPowerOutputFactor));
-        var instructionList = instructions.ToList();
-        var skipping = false;
-        for (var i = 0; i < instructionList.Count; i++)
+        var map = __instance.parent.Map;
+        if (map == null)
         {
-            if (skipping)
-            {
-                if (instructionList[i].opcode != OpCodes.Add || instructionList[i + 1].opcode != OpCodes.Stloc_1)
-                {
-                    continue;
-                }
+            return;
+        }
 
-                i++;
-                skipping = false;
-            }
-            else if (instructionList[i].opcode == OpCodes.Add && instructionList[i + 1].opcode == OpCodes.Stloc_0)
+        var roofGrid = map.roofGrid;
+        var total = 0;
+        var covered = 0;
+        foreach (var c in __instance.parent.OccupiedRect())
+        {
+            total++;
+            var roof = roofGrid.RoofAt(c);
+            if (roof != null && roof != RoofDefOf.RoofTransparent)
             {
-                yield return instructionList[i++];
-                yield return instructionList[i++];
-                yield return new CodeInstruction(OpCodes.Ldarg_0);
-                yield return new CodeInstruction(OpCodes.Ldloc_2);
-                yield return new CodeInstruction(OpCodes.Ldloca, 1);
-                yield return new CodeInstruction(OpCodes.Call, miFixRoofedPowerOutputFactor);
-                skipping = true;
-            }
-            else
-            {
-                yield return instructionList[i];
+                covered++;
             }
         }
+
+        if (total == 0)
+        {
+            return;
+        }
+
+        __result = (total - covered) / (float)total;
     }
 }

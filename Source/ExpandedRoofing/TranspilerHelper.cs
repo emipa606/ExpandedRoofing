@@ -31,10 +31,25 @@ internal static class TranspilerHelper
         }
 
         var thingOwner = new ThingOwner<Thing>();
-        var text = curRoof.defName.Replace("ThickStoneRoof", "");
-        var thingDef = text != "Jade"
-            ? DefDatabase<ThingDef>.GetNamed($"Blocks{text}", false)
-            : DefDatabase<ThingDef>.GetNamed(text, false);
+
+        // Prefer the source stuff recorded on the roof's extension (set on dynamically generated roofs);
+        // fall back to the defName string convention for XML-authored vanilla-stone roofs.
+        var thingDef = curRoof.GetModExtension<RoofExtension>()?.sourceStuff;
+        if (thingDef == null)
+        {
+            var text = curRoof.defName.Replace("ThickStoneRoof", "");
+            thingDef = text != "Jade"
+                ? DefDatabase<ThingDef>.GetNamed($"Blocks{text}", false)
+                : DefDatabase<ThingDef>.GetNamed(text, false);
+        }
+
+        if (thingDef == null)
+        {
+            Log.Error($"ExpandedRoofing: could not resolve source material for roof '{curRoof.defName}'; " +
+                      "no leavings dropped.");
+            return;
+        }
+
         foreach (var item in spawnerDef.CostListAdjusted(thingDef))
         {
             var num = KillFinalize(item.count);
@@ -70,17 +85,4 @@ internal static class TranspilerHelper
         return roofDef == RoofDefOf.RoofTransparent;
     }
 
-    public static bool IsBuildableThickRoof(IntVec3 cell, Map map)
-    {
-        return cell.GetRoof(map) != RimWorld.RoofDefOf.RoofRockThick;
-    }
-
-    public static void FixRoofedPowerOutputFactor(CompPowerPlantSolar comp, IntVec3 c, ref int coveredCells)
-    {
-        var roofDef = comp.parent.Map.roofGrid.RoofAt(c);
-        if (roofDef != null && roofDef != RoofDefOf.RoofTransparent)
-        {
-            coveredCells++;
-        }
-    }
 }
