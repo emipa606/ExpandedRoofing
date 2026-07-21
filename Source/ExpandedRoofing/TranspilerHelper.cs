@@ -43,7 +43,9 @@ internal static class TranspilerHelper
                 : DefDatabase<ThingDef>.GetNamed(text, false);
         }
 
-        if (thingDef == null)
+        // Only stuff-built spawners (thick stone framing) need a resolved material; solar/transparent
+        // framings have fixed cost lists and CostListAdjusted(null) is valid for them.
+        if (thingDef == null && spawnerDef.MadeFromStuff)
         {
             Log.Error($"ExpandedRoofing: could not resolve source material for roof '{curRoof.defName}'; " +
                       "no leavings dropped.");
