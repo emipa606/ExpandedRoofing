@@ -15,6 +15,15 @@ public class Designator_BuildCustomRoof(BuildableDef entDef, RoofDef rDef) : Des
 
     public override AcceptanceReport CanDesignateCell(IntVec3 loc)
     {
+        // Run the vanilla placement gate first (fog, bounds, terrain affordance, blocking things, ...).
+        var stuff = fiStuffDef.GetValue(this) as ThingDef;
+        var acc = GenConstruct.CanPlaceBlueprintAt(entDef, loc, placingRot, Map, DebugSettings.godMode, null, null,
+            stuff);
+        if (!acc.Accepted)
+        {
+            return acc;
+        }
+
         if (loc.GetFirstThing(Map, entDef.blueprintDef) != null)
         {
             return false;

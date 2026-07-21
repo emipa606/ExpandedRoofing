@@ -68,6 +68,12 @@ public class RoofGridCellBoolGiver
             return ThinRockRoofColor;
         }
 
-        return roofCell == RimWorld.RoofDefOf.RoofRockThick ? ThickRockRoofColor : Color.magenta;
+        if (roofCell == RimWorld.RoofDefOf.RoofRockThick)
+        {
+            return ThickRockRoofColor;
+        }
+
+        // Every other thick-stone variant (vanilla-stone + dynamically generated) shares the thick-rock color.
+        return roofCell is { isThickRoof: true } ? ThickRockRoofColor : Color.magenta;
     }
 }

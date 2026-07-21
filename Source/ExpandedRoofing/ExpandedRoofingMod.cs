@@ -72,7 +72,6 @@ internal class ExpandedRoofingMod : Mod
             ref settings.solarController_maxOutput, ref maxOutputBuffer);
         listingStandard.TextFieldNumericLabeled("ER_WattagePerSolarPanelLabel".Translate(),
             ref settings.solarController_wattagePerSolarPanel, ref wattagePerSolarPanel);
-        listingStandard.CheckboxLabeled("ER_GlassLights".Translate(), ref settings.glassLights);
         listingStandard.CheckboxLabeled("ER_RoofMaintenance".Translate(), ref settings.roofMaintenance);
         if (currentVersion != null)
         {

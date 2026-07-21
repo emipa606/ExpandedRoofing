@@ -48,29 +48,41 @@
   <RoofDef ParentName="ThickStoneRoofBase">
     <defName>JadeThickStoneRoof</defName>
     <label>jade thick stone roof</label>
+    <collapseLeavingThingDef>Jade</collapseLeavingThingDef>
   </RoofDef>
   <RoofDef ParentName="ThickStoneRoofBase">
     <defName>SandstoneThickStoneRoof</defName>
     <label>sandstone thick stone roof</label>
+    <collapseLeavingThingDef>BlocksSandstone</collapseLeavingThingDef>
   </RoofDef>
   <RoofDef ParentName="ThickStoneRoofBase">
     <defName>GraniteThickStoneRoof</defName>
     <label>granite thick stone roof</label>
+    <collapseLeavingThingDef>BlocksGranite</collapseLeavingThingDef>
   </RoofDef>
   <RoofDef ParentName="ThickStoneRoofBase">
     <defName>LimestoneThickStoneRoof</defName>
     <label>limestone thick stone roof</label>
+    <collapseLeavingThingDef>BlocksLimestone</collapseLeavingThingDef>
   </RoofDef>
   <RoofDef ParentName="ThickStoneRoofBase">
     <defName>SlateThickStoneRoof</defName>
     <label>slate thick stone roof</label>
+    <collapseLeavingThingDef>BlocksSlate</collapseLeavingThingDef>
   </RoofDef>
   <RoofDef ParentName="ThickStoneRoofBase">
     <defName>MarbleThickStoneRoof</defName>
     <label>marble thick stone roof</label>
+    <collapseLeavingThingDef>BlocksMarble</collapseLeavingThingDef>
   </RoofDef>
   <RoofDef ParentName="ThickStoneRoofBase" MayRequire="Ludeon.RimWorld.Odyssey">
     <defName>VacstoneThickStoneRoof</defName>
     <label>vacstone thick stone roof</label>
+    <collapseLeavingThingDef>BlocksVacstone</collapseLeavingThingDef>
+  </RoofDef>
+  <RoofDef ParentName="ThickStoneRoofBase" MayRequire="Ludeon.RimWorld.Odyssey">
+    <defName>ObsidianThickStoneRoof</defName>
+    <label>obsidian thick stone roof</label>
+    <collapseLeavingThingDef>Obsidian</collapseLeavingThingDef>
   </RoofDef>
 </Defs>

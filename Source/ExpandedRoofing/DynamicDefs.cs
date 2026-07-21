@@ -34,7 +34,12 @@ internal class DynamicDefs
                 isThickRoof = true,
                 collapseLeavingThingDef = thingDef,
                 defName = $"{thingDef.defName.Replace("Blocks", "")}ThickStoneRoof",
-                label = $"{thingDef.LabelCap.Replace("blocks", "").Trim()} Thick Stone Roof"
+                label = $"{thingDef.LabelCap.Replace("blocks", "").Trim()} Thick Stone Roof",
+                modContentPack = thingDef.modContentPack,
+                modExtensions =
+                [
+                    new RoofExtension { spawnerDef = ThingDefOf.ThickStoneRoofFraming, sourceStuff = thingDef }
+                ]
             };
 
             DefGenerator.AddImpliedDef(newRoof);
