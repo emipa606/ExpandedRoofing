@@ -45,6 +45,14 @@ internal class DynamicDefs
             DefGenerator.AddImpliedDef(newRoof);
             InjectedDefHasher.GiveShortHasToDef(newRoof, typeof(RoofDef));
         }
+
+        // H-12: RoofGrid scribes roofs BY shortHash and resolves them on load via
+        // DefDatabase<RoofDef>.GetByShortHash, which reads defsByShortHash — a dictionary vanilla
+        // builds ONCE (ShortHashGiver.GiveAllShortHashes), before StaticConstructorOnStartup runs.
+        // Defs generated here therefore never enter it, and every dynamically generated stone roof
+        // was silently deleted from the map on the next save/load. Rebuilding the dictionary after
+        // generation (public + idempotent) registers them.
+        DefDatabase<RoofDef>.InitializeShortHashDictionary();
     }
 
     private static void impliedBlueprintAndFrameDefs(ThingDef thingDef)
