@@ -8,6 +8,11 @@ public static class GlowGrid_GroundGlowAt
 {
     public static void Postfix(ref float __result, IntVec3 c, Map ___map)
     {
+        if (__result >= 1f)
+        {
+            return;
+        }
+
         var newResult = 0f;
         if (TranspilerHelper.CheckTransparency(___map, c, ref newResult) && newResult > __result)
         {

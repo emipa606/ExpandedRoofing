@@ -1,5 +1,5 @@
 # [Expanded Roofing (Continued)](https://steamcommunity.com/sharedfiles/filedetails/?id=2026595894)
-
+
 ![Image](https://img.litet.net/WAEzk68.png)
 
 Update of Why_is_thats mod https://steamcommunity.com/sharedfiles/filedetails/?id=1512478761 
@@ -46,6 +46,15 @@ A direct port of the [Github version made by **AaronCRobinson.**](https://github
 
 - Is compatible with any existing B19 save with no other roofing mods
 - It's recommended to have this mod load early in your mod load order
+
+# Known limitations
+
+- Thick stone roofs generated for **modded** stone types are dynamic RoofDefs. RimWorld saves each roofed
+  cell by the RoofDef's `shortHash`, and dynamic-def hashes are assigned by a load-order-dependent
+  collision-probe. Changing the active mod list (adding/removing stone-adding mods, or reordering them)
+  between a save and its next load can therefore silently morph or clear those dynamically-generated
+  thick roofs. Hand-authored roofs (transparent, solar, and the vanilla/Odyssey stone variants) are
+  unaffected.
 
 # Notes
 

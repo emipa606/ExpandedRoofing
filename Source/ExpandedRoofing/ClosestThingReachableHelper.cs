@@ -18,7 +18,7 @@ internal static class ClosestThingReachableHelper
             return GenClosest.ClosestThingReachable(root, map, thingReq, peMode, traverseParams, maxDistance, validator,
                 customGlobalSearchSet, searchRegionsMin, searchRegionsMax, forceAllowGlobalSearch,
                 traversableRegionTypes,
-                ignoreEntirelyForbiddenRegions);
+                ignoreEntirelyForbiddenRegions, lookInHaulSources);
         }
 
         var predicate = validator;
@@ -26,7 +26,7 @@ internal static class ClosestThingReachableHelper
 
         return GenClosest.ClosestThingReachable(root, map, thingReq, peMode, traverseParams, maxDistance, validator,
             customGlobalSearchSet, searchRegionsMin, searchRegionsMax, forceAllowGlobalSearch, traversableRegionTypes,
-            ignoreEntirelyForbiddenRegions);
+            ignoreEntirelyForbiddenRegions, lookInHaulSources);
 
         static bool extra(Thing t)
         {
