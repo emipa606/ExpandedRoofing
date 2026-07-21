@@ -1,29 +1,36 @@
 using System.Collections.Generic;
-using System.Linq;
 using Verse;
 
 namespace ExpandedRoofing;
 
 internal sealed class RoofMaintenanceGrid(Map map) : IExposable
 {
+    // NOTE: these thresholds are counted in ~2000-tick bucket cycles (one increment per cell per cycle),
+    // NOT raw ticks. In real time that is roughly 166 in-game days before maintenance is required and
+    // ~250 in-game days before collapse can occur — not 5000/7500 ticks.
     private const int long_TickInterval = 2000;
 
     private const int minTicksBeforeMaintenance = 5000;
 
     private const int minTicksBeforeMTBCollapses = 7500;
 
+    // Source of truth for save/load: cellIndex -> maintenance counter.
     private Dictionary<int, int> grid = new();
+
+    // Cells pre-bucketed by (cellIndex.HashOffset() % long_TickInterval) so Tick() only touches ~1/2000
+    // of the tracked cells each map tick instead of copying the whole dictionary. Transient (rebuilt on load).
+    private readonly List<int>[] buckets = new List<int>[long_TickInterval];
+
+    // Cells whose counter has crossed the maintenance threshold. Transient, maintained incrementally.
+    private readonly HashSet<int> dueCells = [];
 
     public IEnumerable<IntVec3> CurrentlyRequiresMaintenance
     {
         get
         {
-            foreach (var item in grid)
+            foreach (var cell in dueCells)
             {
-                if (item.Value > minTicksBeforeMaintenance)
-                {
-                    yield return GetIntVec3(item.Key);
-                }
+                yield return GetIntVec3(cell);
             }
         }
     }
@@ -31,13 +38,18 @@ internal sealed class RoofMaintenanceGrid(Map map) : IExposable
     public void ExposeData()
     {
         Scribe_Collections.Look(ref grid, "grid");
-        if (Scribe.mode != LoadSaveMode.LoadingVars || grid != null)
+        if (Scribe.mode != LoadSaveMode.LoadingVars)
         {
             return;
         }
 
-        grid = new Dictionary<int, int>();
-        InitExistingMap();
+        if (grid == null)
+        {
+            grid = new Dictionary<int, int>();
+            InitExistingMap();
+        }
+
+        RebuildIndex();
     }
 
     private void InitExistingMap()
@@ -47,9 +59,33 @@ internal sealed class RoofMaintenanceGrid(Map map) : IExposable
             var roofDef = map.roofGrid.RoofAt(allCell);
             if (roofDef != null && roofDef.IsBuildableThickRoof())
             {
-                Add(allCell);
+                grid[GetCell(allCell)] = 0;
             }
         }
+    }
+
+    private void RebuildIndex()
+    {
+        for (var i = 0; i < buckets.Length; i++)
+        {
+            buckets[i]?.Clear();
+        }
+
+        dueCells.Clear();
+        foreach (var pair in grid)
+        {
+            (buckets[BucketIndex(pair.Key)] ??= []).Add(pair.Key);
+            if (pair.Value > minTicksBeforeMaintenance)
+            {
+                dueCells.Add(pair.Key);
+            }
+        }
+    }
+
+    private static int BucketIndex(int cellIndex)
+    {
+        var b = cellIndex.HashOffset() % long_TickInterval;
+        return b < 0 ? b + long_TickInterval : b;
     }
 
     private IntVec3 GetIntVec3(int index)
@@ -65,7 +101,11 @@ internal sealed class RoofMaintenanceGrid(Map map) : IExposable
     public void Add(IntVec3 c)
     {
         var cell = GetCell(c);
-        if (!grid.TryAdd(cell, 0))
+        if (grid.TryAdd(cell, 0))
+        {
+            (buckets[BucketIndex(cell)] ??= []).Add(cell);
+        }
+        else
         {
             Reset(c);
         }
@@ -73,35 +113,49 @@ internal sealed class RoofMaintenanceGrid(Map map) : IExposable
 
     public void Remove(IntVec3 c)
     {
-        grid.Remove(map.cellIndices.CellToIndex(c));
+        var cell = GetCell(c);
+        if (!grid.Remove(cell))
+        {
+            return;
+        }
+
+        buckets[BucketIndex(cell)]?.Remove(cell);
+        dueCells.Remove(cell);
     }
 
     public void Reset(IntVec3 c)
     {
-        grid[map.cellIndices.CellToIndex(c)] = 0;
+        var cell = GetCell(c);
+        grid[cell] = 0;
+        dueCells.Remove(cell);
     }
 
     public bool MaintenanceNeeded(IntVec3 c)
     {
-        return grid[GetCell(c)] > minTicksBeforeMaintenance;
+        return grid.TryGetValue(GetCell(c), out var value) && value > minTicksBeforeMaintenance;
     }
 
     public void Tick()
     {
-        var bucketIndex = Find.TickManager.TicksGame % long_TickInterval;
-
-        foreach (var item in grid.ToList())
+        var bucket = buckets[Find.TickManager.TicksGame % long_TickInterval];
+        if (bucket == null)
         {
-            var tileBucket = item.Key.HashOffset() % long_TickInterval;
-            if (tileBucket != bucketIndex)
+            return;
+        }
+
+        for (var i = 0; i < bucket.Count; i++)
+        {
+            var cell = bucket[i];
+            var value = grid[cell] + 1;
+            grid[cell] = value;
+            if (value > minTicksBeforeMaintenance)
             {
-                continue;
+                dueCells.Add(cell);
             }
 
-            grid[item.Key]++;
-            if (grid[item.Key] > minTicksBeforeMTBCollapses && Rand.MTBEventOccurs(3.5f, 60000f, long_TickInterval))
+            if (value > minTicksBeforeMTBCollapses && Rand.MTBEventOccurs(3.5f, 60000f, long_TickInterval))
             {
-                map.roofCollapseBuffer.MarkToCollapse(GetIntVec3(item.Key));
+                map.roofCollapseBuffer.MarkToCollapse(GetIntVec3(cell));
             }
         }
     }

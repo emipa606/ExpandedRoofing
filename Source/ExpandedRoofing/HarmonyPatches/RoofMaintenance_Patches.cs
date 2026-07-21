@@ -18,8 +18,18 @@ internal class RoofMaintenance_Patches
 
     public static IEnumerable<CodeInstruction> SetRoofTranspiler(IEnumerable<CodeInstruction> instructions)
     {
-        AccessTools.Field(typeof(RoofGrid), "roofGrid");
         var instructionsList = instructions.ToList();
+        if (!instructionsList.Any(ci => ci.opcode == OpCodes.Bne_Un_S))
+        {
+            Log.Error("[ExpandedRoofing] SetRoof transpiler anchor not found — maintenance tracking disabled");
+            foreach (var ci in instructionsList)
+            {
+                yield return ci;
+            }
+
+            yield break;
+        }
+
         int i;
         for (i = 0; i < instructionsList.Count - 1; i++)
         {
@@ -50,8 +60,17 @@ internal class RoofMaintenance_Patches
 
     public static void SetRoofHelper(Map map, IntVec3 c, RoofDef def)
     {
+        // Injected before SetRoof writes the array, so RoofAt(c) still returns the OLD roof here.
+        var oldRoof = map.roofGrid.RoofAt(c);
+
+        // Roof removal / collapse (def == null): purge any tracked cell so the grid never leaks.
         if (def == null)
         {
+            if (oldRoof.IsBuildableThickRoof())
+            {
+                map.GetComponent<RoofMaintenance_MapComponenent>()?.RemoveMaintainableRoof(c);
+            }
+
             return;
         }
 
@@ -61,7 +80,7 @@ internal class RoofMaintenance_Patches
             return;
         }
 
-        if (map.roofGrid.RoofAt(c).IsBuildableThickRoof())
+        if (oldRoof.IsBuildableThickRoof())
         {
             map.GetComponent<RoofMaintenance_MapComponenent>()?.RemoveMaintainableRoof(c);
         }

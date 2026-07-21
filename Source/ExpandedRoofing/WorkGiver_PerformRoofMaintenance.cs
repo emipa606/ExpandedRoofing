@@ -7,6 +7,11 @@ namespace ExpandedRoofing;
 
 public class WorkGiver_PerformRoofMaintenance : WorkGiver_Scanner
 {
+    public override bool ShouldSkip(Pawn pawn, bool forced = false)
+    {
+        return !ExpandedRoofingMod.settings.roofMaintenance || base.ShouldSkip(pawn, forced);
+    }
+
     public override IEnumerable<IntVec3> PotentialWorkCellsGlobal(Pawn pawn)
     {
         return pawn.Map.GetComponent<RoofMaintenance_MapComponenent>()?.MaintenanceRequired;
@@ -20,11 +25,6 @@ public class WorkGiver_PerformRoofMaintenance : WorkGiver_Scanner
         }
 
         if (!pawn.CanReserve(c, 1, -1, ReservationLayerDefOf.Ceiling))
-        {
-            return false;
-        }
-
-        if (!pawn.CanReach(c, PathEndMode.Touch, pawn.NormalMaxDanger()))
         {
             return false;
         }

@@ -6,13 +6,17 @@ namespace ExpandedRoofing.HarmonyPatches;
 [HarmonyPatch(typeof(Game), nameof(Game.FinalizeInit))]
 public static class Game_FinalizeInit
 {
+    private static bool defSurgeryDone;
+
     public static void Postfix()
     {
-        if (!ExpandedRoofingMod.settings.roofMaintenance)
+        // Def surgery is idempotent but ordering-fragile, so run it exactly once per game session.
+        if (defSurgeryDone)
         {
-            AccessTools.Method(typeof(DefDatabase<JobDef>), "Remove")
-                .Invoke(null, [JobDefOf.PerformRoofMaintenance]);
+            return;
         }
+
+        defSurgeryDone = true;
 
         if (!ExpandedRoofingMod.GlassLights)
         {
@@ -32,6 +36,5 @@ public static class Game_FinalizeInit
         roofTransparentFraming.costList = [new ThingDefCountClass(named, 1)];
         DefDatabase<ThingDef>.Add(roofTransparentFraming);
         Log.Message("ExpandedRoofing: Glass+Lights configuration done.");
-        ExpandedRoofingMod.GlassLights = true;
     }
 }

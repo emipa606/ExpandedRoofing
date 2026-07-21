@@ -13,7 +13,7 @@ public class JobDriver_PerformRoofMaintenance : JobDriver
 
     public override bool TryMakePreToilReservations(bool errorOnFailed)
     {
-        return pawn.Reserve(job.targetA, job);
+        return pawn.Reserve(job.targetA, job, 1, -1, ReservationLayerDefOf.Ceiling);
     }
 
     protected override IEnumerable<Toil> MakeNewToils()
@@ -30,7 +30,6 @@ public class JobDriver_PerformRoofMaintenance : JobDriver
             actor.skills.Learn(SkillDefOf.Construction, 0.2f);
             var statValue = actor.GetStatValue(StatDefOf.ConstructionSpeed);
             ticksToNextMaintenance -= statValue;
-            Log.Message($"{ticksToNextMaintenance}");
             if (!(ticksToNextMaintenance <= 0f))
             {
                 return;
@@ -40,6 +39,7 @@ public class JobDriver_PerformRoofMaintenance : JobDriver
             actor.records.Increment(RecordDefOf.ThingsRepaired);
             actor.jobs.EndCurrentJob(JobCondition.Succeeded);
         };
+        maintenance.FailOn(() => !(TargetA.Cell.GetRoof(pawn.Map)?.IsBuildableThickRoof() ?? false));
         maintenance.FailOnCannotTouch(TargetIndex.A, PathEndMode.Touch);
         maintenance.WithEffect(EffecterDefOf.RoofWork, TargetIndex.A);
         maintenance.defaultCompleteMode = ToilCompleteMode.Never;
