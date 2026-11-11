@@ -13,14 +13,14 @@ public class Designator_BuildCustomRoof(BuildableDef entDef, RoofDef rDef) : Des
 
     public override BuildableDef PlacingDef => entDef;
 
-    public override AcceptanceReport CanDesignateCell(IntVec3 loc)
+    public override AcceptanceReport CanDesignateCell(IntVec3 c)
     {
-        if (loc.GetFirstThing(Map, entDef.blueprintDef) != null)
+        if (c.GetFirstThing(Map, entDef.blueprintDef) != null)
         {
             return false;
         }
 
-        var roofAt = Map.roofGrid.RoofAt(loc);
+        var roofAt = Map.roofGrid.RoofAt(c);
         if (roofAt == null)
         {
             return true;

@@ -5,7 +5,7 @@ using Verse;
 namespace ExpandedRoofing.HarmonyPatches;
 
 [StaticConstructorOnStartup]
-internal class HarmonyPatches
+internal static class HarmonyPatches
 {
     public static readonly FieldInfo FI_RoofGrid_map;
 

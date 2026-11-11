@@ -1,59 +1,95 @@
-# GitHub Copilot Instructions for Expanded Roofing (Continued)
+# Expanded Roofing (Continued) GitHub Copilot Instructions
 
-## Mod Overview and Purpose
-
-The Expanded Roofing (Continued) mod enhances the roofing system in RimWorld by introducing customizable roof types, including transparent greenhouse roofs and photovoltaic solar roofs. Originally developed by Vendan and later updated and continued by multiple developers, this mod adds new strategic depth to building design, enabling players to manage light penetration and power generation more effectively.
+## Overview
+Expanded Roofing (Continued) is a RimWorld mod that adds customizable roofing options, including transparent greenhouse roofing and photovoltaic solar roofing. It also reworks the thick roof system and adds research technologies for each feature. The mod is compatible with existing B19 saves and recommends loading early in the mod load order.
 
 ## Key Features and Systems
-
-- **Transparent Roofs**: Designed to allow almost all light to pass through, ideal for greenhouses.
-- **Solar Roofs**: Generate power without occupying ground space. Each solar tile can produce up to 200w and is managed via controllers.
-- **Roof Maintenance**: Thick roofs require maintenance over time to prevent collapses, integrating a dynamic upkeep system.
-- **Research**: Unlock new roofing types and capabilities through four new technological advancements.
-- **Compatibility**: Seamlessly integrates with save games created in version B19 or later, with no additional roofing mods.
-- **Localization**: The mod supports multiple languages, including English, Turkish, Russian, French, Chinese, and Japanese.
-
-### Solar Roofing and Controllers
-
-- Controllers manage the power output of connected solar roofing tiles.
-- A controller's maximum output is capped at 2500w but can manage unlimited tile connections.
-  
-### Roof Maintenance
-
-- Thick roofs deteriorate over time (approximately every 167 days) and require maintenance.
-- After 250 days without maintenance, roofs risk collapse in a mean time between (MTB) event of 3.5 days.
+- **Transparent Roofs**: Allows almost all light to pass through, ideal for greenhouse environments.
+- **Solar Roofs and Controllers**: Enables the generation of power using solar tiles and controllers.
+- **Thick Roofs**: Requires maintenance and can collapse if not maintained.
+- **Research Technologies**: Four new techs for each roofing feature to unlock.
+- **Designators**: New designators in the Zone tab for easier re-roofing.
 
 ## Coding Patterns and Conventions
-
-- **Namespace Structuring**: Maintain modular and clear code by categorizing classes according to functionality and features (e.g., `CompCustomRoof`, `CompPowerPlantSolarController`).
-- **Coding Style**: Use PascalCase for class names and method declarations; use camelCase for local variables and method parameters.
-- **File Organization**: Logical splitting of functionalities into multiple classes and files to promote maintainability (e.g., `RoofGrid_SetRoof.cs`, `GlowGrid_GroundGlowAt.cs`).
+- **Code Structure**: C# files are organized into classes and methods that handle specific functionalities, such as roof maintenance and power generation.
+- **Naming Conventions**: Classes and methods follow PascalCase, and variables follow camelCase.
+- **Documentation**: Inline comments and XML documentation are used to explain complex logic and APIs.
 
 ## XML Integration
-
-- Utilize XML for defining roof types and related data within the mod, employing `ThingDef`, `RoofDef`, and custom `CompProperties`.
-- Designators for new roofing types are specified and available in the game under the `Zone` tab.
+XML files define various aspects of the mod, such as building definitions, job definitions, and research projects. Key XML files include:
+- `Building_SolarController.xml`: Defines the solar controller building.
+- `Jobs_Work.xml`: Defines jobs related to roofing.
+- `ResearchProjectDefs.xml`: Defines research projects for each roofing feature.
+- `ResearchTab.xml`: Defines research tabs for organizing research projects.
+- `Roofs.xml`: Defines roof types and spawner definitions.
 
 ## Harmony Patching
-
-- Embrace Harmony for non-destructive method patching, ensuring compatibility with other mods and vanilla updates.
-- **Common Harmony Classes**:
-  - `HarmonyPatches`: Implement patches in this class to alter or extend game behavior effectively.
-  - Specific examples include manipulation of construction blocking (`GenConstruct_BlocksConstruction`) and roof grid updates (`RoofGrid_SetRoof`).
+The mod uses Pardeike's Harmony library for non-destructive patching. Key Harmony patches include:
+- Modifying building behavior to add solar power generation.
+- Adjusting maintenance and collapse mechanics for thick roofs.
+- Integrating new research technologies into the game.
 
 ## Suggestions for Copilot
+- **Code Generation**: When writing new components or systems, Copilot can generate the basic structure and methods based on existing patterns.
+- **XML Snippets**: For XML integration, Copilot can suggest snippets for defining new buildings, jobs, or research projects.
+- **Harmony Patches**: When implementing Harmony patches, Copilot can provide examples of how to modify existing game mechanics without interfering with core functionality.
+- **Localization**: For adding translations, Copilot can suggest structures for defining new languages and translations based on existing files.
 
-To maximize efficiency and accuracy when using GitHub Copilot:
-- **Prompt Suggestions**: Start code comments or method stubs to receive more accurate autocompletions based on context.
-- **Harmony Examples**: Provide examples of patches and scenarios where Harmony can alter game logic or visuals.
-- **XML Data**: When creating or modifying XML defs, prompt Copilot with existing `Def` examples to explore similar pattern options.
-- **Localization Enhancements**: Provide key phrases or terms for use in translations and localizations, leveraging Copilot's abilities to suggest translated strings based on these inputs.
+## Example GitHub Copilot Instructions File
 
-## Note
 
-Whenever you encounter issues:
-- Test with only this mod enabled alongside its requirements.
-- Use the provided Log Uploader for error reports.
-- Direct issues to the Discord channel for quicker support; GitHub is preferred for solutions and contributions.
+# Expanded Roofing (Continued) GitHub Copilot Instructions
 
-With these instructions, contributors should be well-equipped to develop and expand upon the Expanded Roofing mod for RimWorld.
+## Overview
+Expanded Roofing (Continued) is a RimWorld mod that adds customizable roofing options, including transparent greenhouse roofing and photovoltaic solar roofing. It also reworks the thick roof system and adds research technologies for each feature. The mod is compatible with existing B19 saves and recommends loading early in the mod load order.
+
+## Key Features and Systems
+- **Transparent Roofs**: Allows almost all light to pass through, ideal for greenhouse environments.
+- **Solar Roofs and Controllers**: Enables the generation of power using solar tiles and controllers.
+- **Thick Roofs**: Requires maintenance and can collapse if not maintained.
+- **Research Technologies**: Four new techs for each roofing feature to unlock.
+- **Designators**: New designators in the Zone tab for easier re-roofing.
+
+## Coding Patterns and Conventions
+- **Code Structure**: C# files are organized into classes and methods that handle specific functionalities, such as roof maintenance and power generation.
+- **Naming Conventions**: Classes and methods follow PascalCase, and variables follow camelCase.
+- **Documentation**: Inline comments and XML documentation are used to explain complex logic and APIs.
+
+## XML Integration
+XML files define various aspects of the mod, such as building definitions, job definitions, and research projects. Key XML files include:
+- `Building_SolarController.xml`: Defines the solar controller building.
+- `Jobs_Work.xml`: Defines jobs related to roofing.
+- `ResearchProjectDefs.xml`: Defines research projects for each roofing feature.
+- `ResearchTab.xml`: Defines research tabs for organizing research projects.
+- `Roofs.xml`: Defines roof types and spawner definitions.
+
+## Harmony Patching
+The mod uses Pardeike's Harmony library for non-destructive patching. Key Harmony patches include:
+- Modifying building behavior to add solar power generation.
+- Adjusting maintenance and collapse mechanics for thick roofs.
+- Integrating new research technologies into the game.
+
+## Suggestions for Copilot
+- **Code Generation**: When writing new components or systems, Copilot can generate the basic structure and methods based on existing patterns.
+- **XML Snippets**: For XML integration, Copilot can suggest snippets for defining new buildings, jobs, or research projects.
+- **Harmony Patches**: When implementing Harmony patches, Copilot can provide examples of how to modify existing game mechanics without interfering with core functionality.
+- **Localization**: For adding translations, Copilot can suggest structures for defining new languages and translations based on existing files.
+
+
+This detailed file provides a comprehensive guide for contributors and developers using GitHub Copilot with the Expanded Roofing (Continued) mod, ensuring consistency and efficiency in development.
+
+## Project Solution Guidelines
+- Relevant mod XML files are included as Solution Items under the solution folder named XML, these can be read and modified from within the solution.
+- Use these in-solution XML files as the primary files for reference and modification.
+- The `.github/copilot-instructions.md` file is included in the solution under the `.github` solution folder, so it should be read/modified from within the solution instead of using paths outside the solution. Update this file once only, as it and the parent-path solution reference point to the same file in this workspace.
+- When making functional changes in this mod, ensure the documented features stay in sync with implementation; use the in-solution `.github` copy as the primary file.
+- In the solution is also a project called Assembly-CSharp, containing a read-only version of the decompiled game source, for reference and debugging purposes.
+- For any new documentation, update this copilot-instructions.md file rather than creating separate documentation files.
+
+
+## Hard rules (must follow)
+- Do NOT run commands that modify the repo (no git commit, git apply, dotnet format) unless explicitly asked.
+- Prefer minimal reads: read only the smallest code region needed (around the suspicious lines).
+- When mentioning SonarQube issues, automatically use the SonarQube MCP service to fetch and address issues instead of making inferred fixes without querying SonarQube first.
+- When mentioning the rimworld log, automatically use the Rimworld MCP service to fetch the log.
+

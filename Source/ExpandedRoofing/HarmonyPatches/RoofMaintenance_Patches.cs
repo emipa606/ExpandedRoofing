@@ -7,7 +7,7 @@ using Verse;
 namespace ExpandedRoofing.HarmonyPatches;
 
 [StaticConstructorOnStartup]
-internal class RoofMaintenance_Patches
+internal static class RoofMaintenance_Patches
 {
     static RoofMaintenance_Patches()
     {

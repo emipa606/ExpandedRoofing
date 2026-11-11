@@ -131,14 +131,14 @@ public class SolarRoofingTracker
 
     public void RemoveSolarCell(IntVec3 cell)
     {
-        foreach (var value in cellSets.Values)
+        foreach (var value in cellSets.Values.Select(value => value.set))
         {
-            if (!value.set.Contains(cell))
+            if (!value.Contains(cell))
             {
                 continue;
             }
 
-            value.set.Remove(cell);
+            value.Remove(cell);
             return;
         }
 

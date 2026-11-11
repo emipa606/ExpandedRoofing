@@ -90,18 +90,18 @@ internal sealed class RoofMaintenanceGrid(Map map) : IExposable
     {
         var bucketIndex = Find.TickManager.TicksGame % long_TickInterval;
 
-        foreach (var item in grid.ToList())
+        foreach (var item in grid.Select(kv => kv.Key).ToList())
         {
-            var tileBucket = item.Key.HashOffset() % long_TickInterval;
+            var tileBucket = item.HashOffset() % long_TickInterval;
             if (tileBucket != bucketIndex)
             {
                 continue;
             }
 
-            grid[item.Key]++;
-            if (grid[item.Key] > minTicksBeforeMTBCollapses && Rand.MTBEventOccurs(3.5f, 60000f, long_TickInterval))
+            grid[item]++;
+            if (grid[item] > minTicksBeforeMTBCollapses && Rand.MTBEventOccurs(3.5f, 60000f, long_TickInterval))
             {
-                map.roofCollapseBuffer.MarkToCollapse(GetIntVec3(item.Key));
+                map.roofCollapseBuffer.MarkToCollapse(GetIntVec3(item));
             }
         }
     }

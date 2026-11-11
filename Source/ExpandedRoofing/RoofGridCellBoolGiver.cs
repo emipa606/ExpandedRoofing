@@ -7,7 +7,7 @@ using Verse;
 namespace ExpandedRoofing;
 
 [StaticConstructorOnStartup]
-public class RoofGridCellBoolGiver
+public static class RoofGridCellBoolGiver
 {
     private static readonly Color ThinRockRoofColor;
 

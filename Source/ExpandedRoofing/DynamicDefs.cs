@@ -7,7 +7,7 @@ using Verse;
 namespace ExpandedRoofing;
 
 [StaticConstructorOnStartup]
-internal class DynamicDefs
+internal static class DynamicDefs
 {
     private static readonly MethodInfo miNewBlueprintDefThing;
 

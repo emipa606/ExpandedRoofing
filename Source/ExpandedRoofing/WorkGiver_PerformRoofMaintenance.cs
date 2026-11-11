@@ -37,8 +37,8 @@ public class WorkGiver_PerformRoofMaintenance : WorkGiver_Scanner
         return pawn.Map.GetComponent<RoofMaintenance_MapComponenent>()?.MaintenanceNeeded(c) ?? false;
     }
 
-    public override Job JobOnCell(Pawn pawn, IntVec3 c, bool forced = false)
+    public override Job JobOnCell(Pawn pawn, IntVec3 cell, bool forced = false)
     {
-        return new Job(JobDefOf.PerformRoofMaintenance, c);
+        return new Job(JobDefOf.PerformRoofMaintenance, cell);
     }
 }

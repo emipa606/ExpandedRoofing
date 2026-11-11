@@ -8,7 +8,7 @@ using Verse;
 namespace ExpandedRoofing;
 
 [StaticConstructorOnStartup]
-internal class FixFinishFrameBuildOrder
+internal static class FixFinishFrameBuildOrder
 {
     private static readonly MethodInfo miClosestThingReachable;
 
